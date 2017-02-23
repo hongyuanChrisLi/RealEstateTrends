@@ -53,6 +53,17 @@ subprojects {
 			exclude module: ("spring-boot-starter-logging")
 		}
 		
+		// DB
+		compile("org.springframework:spring-jdbc")
+		compile("mysql:mysql-connector-java:5.1.38")
+		compile("org.hibernate:hibernate-entitymanager:5.1.0.Final")
+		compile("org.hibernate:hibernate-core:5.1.0.Final")
+		compile("org.springframework.data:spring-data-jpa:1.9.4.RELEASE") {
+			exclude module: "org.springframework:spring-core"
+			exclude module: "org.springframework:spring-beans"
+			exclude module: "org.slf4j:slf4j-api"
+		}
+		
 		//swagger UI -- documentation for REST services
 		compile("io.springfox:springfox-swagger2:2.6.1") {
 			exclude module: ("org.slf4j:slf4j-api")

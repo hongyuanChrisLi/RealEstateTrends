@@ -1,4 +1,4 @@
-package hello;
+package org.ret.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
