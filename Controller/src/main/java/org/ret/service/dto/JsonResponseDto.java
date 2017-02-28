@@ -1,7 +1,5 @@
 package org.ret.service.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class JsonResponseDto {

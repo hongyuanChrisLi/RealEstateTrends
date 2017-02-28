@@ -1,10 +1,20 @@
-package hello;
+package org.ret.app;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,13 +27,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @SpringBootApplication
-@ComponentScan("hello")
+//@PropertySource({"classpath:application.properties"})
+@ComponentScan(basePackages="org.ret.config")
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
+    
+/*    @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+        return tomcat;
+    }*/
+    
     @Bean
     public Docket documentation() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,17 +48,16 @@ public class Application {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(smartResponseApiInfo());
+                .apiInfo(retApiInfo());
     }
-
-    private ApiInfo smartResponseApiInfo() {
+    private ApiInfo retApiInfo() {
         return new ApiInfo(
-                "DAP - Smart Response REST API Documentation",
-                "This gives the details of all the REST API's within Smart Response Application.",
-                "API **",
-                "<terms of service url goes here>",
-                new Contact("Smart Response", "https://smartresponse.org/", "Test@smartresponse.org"),
-                "DAP -- Smart Response Team",
+                "RET - Real Estate Trends REST API Documentation",
+                "",
+                "",
+                "",
+                new Contact("Smart Response", "", ""),
+                "",
                 "API License URL"
         );
     }
