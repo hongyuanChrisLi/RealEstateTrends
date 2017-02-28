@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@Component
 @Api(value = "MLS")
 public class MlsPropController extends AbstractController {
 
