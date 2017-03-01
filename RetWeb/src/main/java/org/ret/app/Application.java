@@ -1,10 +1,18 @@
 package org.ret.app;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,15 +22,26 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration
+//@Configuration
 @EnableSwagger2
 @SpringBootApplication
 //@PropertySource({"classpath:application.properties"})
-@ComponentScan(basePackages={"org.ret.config", "org.ret.controller", "org.ret.service.impl", "org.ret.dao.impl"})
-public class Application {
+@ComponentScan(basePackages={"org.ret.admin.*", "org.ret.core.*"})
+public class Application implements WebApplicationInitializer  {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+    
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+/*        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+        ctx.scan("org.ret.config");
+        ctx.scan("org.ret.dao.impl");
+        ctx.scan("org.ret.service.impl");
+        ctx.scan("org.ret.controller");
+     
+        ctx.close();*/
     }
     
 /*    @Bean
@@ -51,5 +70,7 @@ public class Application {
                 "API License URL"
         );
     }
+
+
 
 }

@@ -1,4 +1,8 @@
 dependencies {
     compile project(':Core')
-	compile project(':Controller')
+	compile project(':Admin')
+}
+
+bootRun {
+	addResources = true
 }
