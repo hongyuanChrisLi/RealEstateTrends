@@ -6,7 +6,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import org.ret.admin.service.MlsPropService;
 import org.ret.admin.service.dto.JsonResponseDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
