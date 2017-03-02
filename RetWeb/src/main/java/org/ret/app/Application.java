@@ -43,7 +43,7 @@ public class Application{
                 "",
                 "",
                 "",
-                new Contact("Smart Response", "", ""),
+                new Contact("Hongyuan(Chris) Li", "", ""),
                 "",
                 "API License URL"
         );
