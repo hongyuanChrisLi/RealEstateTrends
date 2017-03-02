@@ -21,7 +21,9 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'war'
 	apply plugin: 'spring-boot'
-
+	
+	bootRepackage.enabled = false
+	
 	jar {
 		baseName = 'gs-spring-boot'
 		version =  '0.1.0'
@@ -86,7 +88,7 @@ subprojects {
 
 
 	springBoot {
-			mainClass = "org.ret.app.Application"
+		mainClass = "org.ret.app.Application"
 	}
-
+	
 }
