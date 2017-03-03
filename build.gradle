@@ -54,7 +54,6 @@ dependencies {
 	
 	// Net
 	compile("org.apache.tomcat.embed:tomcat-embed-jasper:9.0.0.M1")
-	compile("javax.servlet:javax.servlet-api:3.1.0")
 	
 	// DB
 	compile("org.springframework:spring-jdbc")

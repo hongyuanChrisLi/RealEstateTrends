@@ -1,5 +1,6 @@
-package org.ret.core.config;
+/*package org.ret.core.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
@@ -46,3 +47,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return new MethodValidationPostProcessor();
     }
 }
+*/
