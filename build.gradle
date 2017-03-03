@@ -86,6 +86,12 @@ war {
 	version =  '0.0.1'
 }
 
+bootRun {
+	addResources = true
+}
+
 task createWrapper(type: Wrapper) {
     gradleVersion = '3.2.1'
 }
+
+

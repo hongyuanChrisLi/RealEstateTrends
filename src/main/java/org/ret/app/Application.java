@@ -6,8 +6,10 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,32 +34,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableJpaRepositories(basePackages="org.ret.core.dao.impl")
 @EntityScan(basePackages="org.ret.core.entity")
 @ComponentScan(basePackages={"org.ret.admin.*", "org.ret.core.*"})
-public class Application implements WebApplicationInitializer{
+public class Application extends SpringBootServletInitializer{
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-    
+ 
     @Override
-    public void onStartup( ServletContext servletContext ) throws ServletException {
-        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-
-        servletContext.addListener( new ContextLoaderListener( ctx ) );
-        
-        AnnotationConfigWebApplicationContext dispatchCtx = new AnnotationConfigWebApplicationContext();
-        ServletRegistration.Dynamic dispatcher;
-        
-        dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(dispatchCtx));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/index.html");
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
     }
-    
-    @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-        return tomcat;
-    }
-    
     
     @Bean
     public Docket documentation() {
