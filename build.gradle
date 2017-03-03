@@ -15,80 +15,77 @@ buildscript {
     }
 }
 
-subprojects {
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
 
-	apply plugin: 'java'
-	apply plugin: 'eclipse'
-	apply plugin: 'war'
-	apply plugin: 'spring-boot'
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
 	
-	bootRepackage.enabled = false
-	
-	jar {
-		baseName = 'gs-spring-boot'
-		version =  '0.1.0'
-	}
-
-	repositories {
-		mavenCentral()
-		jcenter()
-	}
-
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
-
-	dependencies {
-		
-		compile("org.springframework.boot:spring-boot-starter-web") {
-			exclude module: "spring-boot-starter-logging"
-			exclude module: "org.springframework:spring-core"
-			exclude module: "org.springframework:spring-context"
-			exclude module: 'org.springframework.boot:spring-boot-starter-logging'
-		}
-		
-		compile ('org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE')
-		
-		compile("org.springframework:spring-webmvc:4.2.5.RELEASE")
-		compile("org.springframework.data:spring-data-rest-core:2.5.0.RELEASE")
-		compile("org.springframework.data:spring-data-rest-webmvc:2.5.0.RELEASE")
-		compile("org.springframework.boot:spring-boot-starter-security") {
-			exclude module: ("spring-boot-starter-logging")
-		}
-		
-		// Util
-		compile("org.apache.commons:commons-lang3:3.4")
-		compile("org.aspectj:aspectjweaver:1.6.10")
-		compile("org.apache.commons:commons-io:1.3.2")
-		compile("org.apache.httpcomponents:httpclient:4.5.1")
-		
-		// Net
-		compile("org.apache.tomcat.embed:tomcat-embed-jasper:9.0.0.M1")
-		compile("javax.servlet:javax.servlet-api:3.1.0")
-		
-		// DB
-		compile("org.springframework:spring-jdbc")
-		compile("mysql:mysql-connector-java:5.1.38")
-		compile("org.hibernate:hibernate-entitymanager:5.1.0.Final")
-		compile("org.hibernate:hibernate-core:5.1.0.Final")
-		compile("org.springframework.data:spring-data-jpa:1.9.4.RELEASE") {
-			exclude module: "org.springframework:spring-core"
-			exclude module: "org.springframework:spring-beans"
-			exclude module: "org.slf4j:slf4j-api"
-		}
-		
-		//swagger UI -- documentation for REST services
-		compile("io.springfox:springfox-swagger2:2.6.1") {
-			exclude module: ("org.slf4j:slf4j-api")
-		}
-		compile("io.springfox:springfox-swagger-ui:2.6.1")
-		
-		testCompile("junit:junit")
-		
-	}
-
-
-	springBoot {
-		mainClass = "org.ret.app.Application"
+	compile("org.springframework.boot:spring-boot-starter-web") {
+		exclude module: "spring-boot-starter-logging"
+		exclude module: "org.springframework:spring-core"
+		exclude module: "org.springframework:spring-context"
+		exclude module: 'org.springframework.boot:spring-boot-starter-logging'
 	}
 	
+	compile ('org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE')
+	
+	compile("org.springframework:spring-webmvc:4.2.5.RELEASE")
+	compile("org.springframework.data:spring-data-rest-core:2.5.0.RELEASE")
+	compile("org.springframework.data:spring-data-rest-webmvc:2.5.0.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-security") {
+		exclude module: ("spring-boot-starter-logging")
+	}
+	
+	// Util
+	compile("org.apache.commons:commons-lang3:3.4")
+	compile("org.aspectj:aspectjweaver:1.6.10")
+	compile("org.apache.commons:commons-io:1.3.2")
+	compile("org.apache.httpcomponents:httpclient:4.5.1")
+	
+	// Net
+	compile("org.apache.tomcat.embed:tomcat-embed-jasper:9.0.0.M1")
+	compile("javax.servlet:javax.servlet-api:3.1.0")
+	
+	// DB
+	compile("org.springframework:spring-jdbc")
+	compile("mysql:mysql-connector-java:5.1.38")
+	compile("org.hibernate:hibernate-entitymanager:5.1.0.Final")
+	compile("org.hibernate:hibernate-core:5.1.0.Final")
+	compile("org.springframework.data:spring-data-jpa:1.9.4.RELEASE") {
+		exclude module: "org.springframework:spring-core"
+		exclude module: "org.springframework:spring-beans"
+		exclude module: "org.slf4j:slf4j-api"
+	}
+	
+	//swagger UI -- documentation for REST services
+	compile("io.springfox:springfox-swagger2:2.6.1") {
+		exclude module: ("org.slf4j:slf4j-api")
+	}
+	compile("io.springfox:springfox-swagger-ui:2.6.1")
+	
+	testCompile("junit:junit")
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+}
+
+springBoot {
+	mainClass = "org.ret.app.Application"
+}
+
+war {
+	baseName = 'myapp'
+	version =  '0.0.1'
+}
+
+task createWrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
 }

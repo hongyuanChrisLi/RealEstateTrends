@@ -1,0 +1,1 @@
+web:     java -jar tools/webapp-runner.jar --port 8080 build/libs/myapp-0.0.1.war
