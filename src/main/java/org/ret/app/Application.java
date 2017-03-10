@@ -25,10 +25,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @SpringBootApplication
-//@EnableJpaRepositories(basePackages="org.ret.core.dao.impl")
-//@EntityScan(basePackages="org.ret.core.entity")
-//@ComponentScan(basePackages={"org.ret.admin.*", "org.ret.core.*"})
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@EnableJpaRepositories(basePackages="org.ret.core.dao.impl")
+@EntityScan(basePackages="org.ret.core.entity")
+@ComponentScan(basePackages={"org.ret.admin.*", "org.ret.core.*"})
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
 
 public class Application extends SpringBootServletInitializer{
 

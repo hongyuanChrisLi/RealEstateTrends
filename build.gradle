@@ -58,6 +58,7 @@ dependencies {
 	// DB
 	compile("org.springframework:spring-jdbc")
 	compile("mysql:mysql-connector-java:5.1.38")
+	compile("postgresql:postgresql:9.1-901-1.jdbc4")
 	compile("org.hibernate:hibernate-entitymanager:5.1.0.Final")
 	compile("org.hibernate:hibernate-core:5.1.0.Final")
 	compile("org.springframework.data:spring-data-jpa:1.9.4.RELEASE") {

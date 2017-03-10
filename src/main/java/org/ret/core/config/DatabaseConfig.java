@@ -1,9 +1,16 @@
 package org.ret.core.config;
 
+import static org.ret.core.constant.AppConstant.DB_DRIVER;
+import static org.ret.core.constant.AppConstant.DB_URL;
+import static org.ret.core.constant.AppConstant.DB_USERNAME;
+import static org.ret.core.constant.AppConstant.DB_PASSWORD;
+
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
@@ -14,14 +21,17 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @ComponentScan("org.ret.entity")*/
 public class DatabaseConfig {
     
+    @Autowired
+    private Environment environment;
+    
     @Bean
     public DataSource createDataSource() throws Exception {
-
+        
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/mls?useUnicode=true&characterEncoding=UTF-8");
-        dataSource.setUsername("mlsuser");
-        dataSource.setPassword("mls123");
+        dataSource.setDriverClassName(environment.getProperty(DB_DRIVER));
+        dataSource.setUrl(environment.getProperty(DB_URL));
+        dataSource.setUsername(environment.getProperty(DB_USERNAME));
+        dataSource.setPassword(environment.getProperty(DB_PASSWORD));
 
         return dataSource;
     }
