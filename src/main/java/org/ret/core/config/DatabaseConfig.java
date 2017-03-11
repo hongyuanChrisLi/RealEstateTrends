@@ -5,6 +5,7 @@ import static org.ret.core.constant.AppConstant.DB_URL;
 import static org.ret.core.constant.AppConstant.DB_USERNAME;
 import static org.ret.core.constant.AppConstant.DB_PASSWORD;
 
+import java.net.URI;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,16 @@ public class DatabaseConfig {
     @Bean
     public DataSource createDataSource() throws Exception {
         
+        URI dbUrl = new URI(environment.getProperty(DB_URL));
+        String url = "jdbc:postgresql://" + dbUrl.getHost() + ":" + dbUrl.getPort() + dbUrl.getPath(); 
+        String username = dbUrl.getUserInfo().split(":")[0];
+        String password = dbUrl.getUserInfo().split(":")[1];
+        
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty(DB_DRIVER));
-        dataSource.setUrl(environment.getProperty(DB_URL));
-        dataSource.setUsername(environment.getProperty(DB_USERNAME));
-        dataSource.setPassword(environment.getProperty(DB_PASSWORD));
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
 
         return dataSource;
     }
