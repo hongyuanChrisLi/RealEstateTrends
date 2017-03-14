@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="example359" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" ng-app="RealEstateTrends" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <meta name="author" content="Script Tutorials" />
-    <title>Responsive website using AngularJS | Script Tutorials</title>
-    <meta name="description" content="Responsive website using AngularJS - demo page">
+    <meta name="author" content="Chris" />
+    <title>Real Estate Trends</title>
+    <meta name="description" content="Real Estate Trends">
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -13,8 +13,9 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
 
     <!-- add javascripts -->
-    <script src="js/jquery-2.0.3.min.js"></script>
-    <script src="js/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
 </head>
@@ -23,39 +24,58 @@
         <div class="wrap">
             <!-- logo -->
             <a href="#!"><img class="logo" src="images/logo.png" /></a>
-
-            <!-- navigation menu -->
+			            <!-- navigation menu -->
             <nav>
                 <ul>
                     <li><a id="workBtn" href="#!/" ng-class="{activeSmall:part == 'projects'}" >Our Projects</a></li>
                     <li><a id="privacyBtn" href="#!/privacy" ng-class="{activeSmall:part == 'privacy'}">Privacy &amp; Terms</a></li>
                     <li><a id="aboutBtn" href="#!/about" ng-class="{activeSmall:part == 'about'}">About</a></li>
-                    <li style="margin-right:0px"><a id="contactBtn" class="active" href="javascript: void(0)" ng-click="showForm()">Contact Us</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
-    <!-- contact us form -->
-    <div class="paddRow contactRow">
-        <div class="wrap">
-            <div class="head">Contact Us</div>
-            <img class="close" src="images/close.png" ng-click="closeForm()" />
-            <form ng-submit="save()" class="contactForm" name="form" ng-hide="loaded">
-                <input class="input" required="required" type="text" name="name" placeholder="your name" ng-model="message.name" />
-                <input class="input email" required="required" type="email" name="email" value="" placeholder="your email" ng-model="message.email" /><br />
-                <textarea class="textarea" rows="5" required="required" placeholder="your message" ng-model="message.text" ></textarea>
-                <button class="btn green">send message</button>
-            </form>
-
-            <!-- contact us form response messages -->
-            <div ng-show="process" style="text-align:center">
-                <img class="loader" src="images/loader.png" />
-            </div>
-            <div ng-show="success"><p>Your message has been sent, thank you.</p></div>
-        </div>
-    </div>
-
+	
+	<canvas id="myChart" width="400" height="400"></canvas>
+	<script>
+	var ctx = document.getElementById("myChart");
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+	        datasets: [{
+	            label: '# of Votes',
+	            data: [12, 19, 3, 5, 2, 3],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+	</script>
+	
     <!-- main content -->
     <div style="position:relative">
         <div style="width:100%" ng-view ng-animate="{enter: 'view-enter', leave: 'view-leave'}"></div>
