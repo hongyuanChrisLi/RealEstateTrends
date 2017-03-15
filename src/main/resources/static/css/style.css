@@ -73,7 +73,7 @@ input:focus,textarea:focus {
   box-sizing:border-box;
   margin:0 auto;
   max-width:1420px;
-  overflow:hidden;
+  overflow:visible;
   padding:0 50px;
   position:relative;
   width:100%;
@@ -84,6 +84,11 @@ input:focus,textarea:focus {
   height:100%;
   margin-right:-0.25em;
   vertical-align:middle;
+}
+.wrap:after{
+  content:'';
+  display:table;
+  clear:both;	
 }
 
 /* header section */
@@ -227,9 +232,6 @@ footer .copyright {
   float:right;
 }
 
-.projectHead.product {
-  background-color:#87b822;
-}
 .projectHead .picture {
   margin-bottom:6%;
   margin-top:6%;
@@ -238,7 +240,7 @@ footer .copyright {
   margin-right:-3.5%;
 }
 .projectHead .text {
-  position:absolute;
+  position:relative;
   width:49%;
 }
 .projectHead .centerText {
