@@ -156,6 +156,17 @@ footer .copyright {
 }
 
 /* other objects */
+.chartBox {
+  color:#fff;
+  display:block;
+}
+.chartBox .chart {
+  float:right;
+  margin-bottom:5%;
+  margin-top:5%;
+  width:50%;
+}
+
 .projectObj {
   color:#fff;
   display:block;
@@ -171,12 +182,7 @@ footer .copyright {
   float:right;
   margin-bottom:5%;
   margin-top:5%;
-  width:20%;
-}
-
-.chartBox {
-  color:#fff;
-  display:block;
+  width:15%;
 }
 
 .paddRow {
