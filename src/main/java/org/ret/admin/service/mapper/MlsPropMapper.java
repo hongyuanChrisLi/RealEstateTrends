@@ -1,4 +1,4 @@
-package org.ret.service.admin.mapper;
+package org.ret.admin.service.mapper;
 
 import org.ret.admin.service.dto.MlsPropDto;
 import org.ret.core.entity.MlsProp;

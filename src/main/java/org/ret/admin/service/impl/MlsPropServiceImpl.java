@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ret.admin.service.MlsPropService;
 import org.ret.admin.service.dto.MlsPropDto;
+import org.ret.admin.service.mapper.MlsPropMapper;
 import org.ret.core.dao.MlsPropDao;
-import org.ret.service.admin.mapper.MlsPropMapper;
 
 @Service
 public class MlsPropServiceImpl implements MlsPropService {
