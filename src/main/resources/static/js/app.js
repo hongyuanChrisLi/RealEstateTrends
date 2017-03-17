@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 // angular.js main app initialization
-var app = angular.module('RealEstateTrends', ['ngRoute', 'chart.js']).config(
+var app = angular.module('app', ['ngRoute', 'chart.js']).config(
         ['$routeProvider', function($routeProvider) {
           $routeProvider.when('/', {
             templateUrl: 'pages/index.html',
@@ -30,6 +30,29 @@ app.config(['$locationProvider', function($location) {
   $location.hashPrefix('!');
 }]);
 
+app.config(function($logProvider) {
+  $logProvider.debugEnabled(false);
+});
+
+
+// Controller for County dropdown list
+app.controller('countyOptCtrl', function($scope, $http, $log){
+  $http({
+    method : 'GET',
+    url : '/area/county'
+  }).then(function successCallback(response){
+    var jsonCounties = response.data.responseData.counties;
+    var counties = [];
+    var num = jsonCounties.length;
+    for ( var i = 0; i < num; i++ ){
+      counties.push(jsonCounties[i].county)
+    }
+    $scope.names = counties;
+  })
+});
+
+
+// Controller for chart
 app.controller("LineCtrl", function($scope) {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June",

@@ -28,7 +28,7 @@ public class AreaController extends AbstractController {
     CountyService countyService;
     
     @ApiOperation(value = "Get All Counties", notes = "Get All Counties")
-    @RequestMapping(value = AREA_COUNTY_MAPPING, method = GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = AREA_COUNTY_MAPPING, method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JsonResponseDto> getAllCounties() {
         
         List<CountyDto> countyDtoList = countyService.getAllCountyDto();
