@@ -6,6 +6,8 @@ import static org.ret.core.constant.AppConstant.DB_USERNAME;
 import static org.ret.core.constant.AppConstant.DB_PASSWORD;
 
 import java.net.URI;
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 
 @Configuration
@@ -42,35 +47,18 @@ public class DatabaseConfig {
         return dataSource;
     }
     
-/*    
-    @Bean
-    public DataSource dataSource(Environment environment) {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(environment.getProperty(DB_DRIVER));
-        dataSource.setUrl(environment.getProperty(DB_URL));
-        dataSource.setUsername(environment.getProperty(DB_USERNAME));
-        dataSource.setPassword(environment.getProperty(DB_PASSWORD));
-
-        return dataSource;
-    }
-    
     @Bean
-    @DependsOn("jdbcTemplate")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment environment) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactory.setDataSource(dataSource);
-
-        entityManagerFactory.setPackagesToScan(environment.getProperty("entitymanager.packagesToScan"));
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
 
         Properties additionalProperties =  new Properties();
-        additionalProperties.put(DIALECT, environment.getProperty(DIALECT));
-        additionalProperties.put(SHOW_SQL, environment.getProperty(SHOW_SQL));
-        additionalProperties.put(USE_SECOND_LEVEL_CACHE, environment.getProperty(USE_SECOND_LEVEL_CACHE));
+        additionalProperties.put("hibernate.cache.use_second_level_cache", "false");
         entityManagerFactory.setJpaProperties(additionalProperties);
         
         return entityManagerFactory;
@@ -82,6 +70,6 @@ public class DatabaseConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;
     }
-*/
+
     
 }

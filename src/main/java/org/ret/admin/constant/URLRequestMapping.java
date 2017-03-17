@@ -6,5 +6,7 @@ public interface URLRequestMapping {
     
     String AREA_MAPPING = "/area/";
     String AREA_COUNTY_MAPPING = "/area/county";
+    String AREA_CITY_MAPPING = "/area/city";
+    String AREA_ZIPCODE_MAPPING = "/area/zipcode";
     
 }

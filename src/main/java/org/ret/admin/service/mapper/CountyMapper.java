@@ -9,11 +9,11 @@ public class CountyMapper {
         if (pojo == null)
             return null;
         
-        CountyDto mlsPropDto = new CountyDto();
-        mlsPropDto.setCountyId(pojo.getCountyId());
-        mlsPropDto.setCounty(pojo.getCounty());
+        CountyDto countyDto = new CountyDto();
+        countyDto.setCountyId(pojo.getCountyId());
+        countyDto.setCounty(pojo.getCounty());
         
-        return mlsPropDto;
+        return countyDto;
     }
     
 }

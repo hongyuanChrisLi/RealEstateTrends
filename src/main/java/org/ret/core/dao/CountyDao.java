@@ -7,4 +7,6 @@ import org.ret.core.entity.County;
 public interface CountyDao {
     
     List<County> getAllCounties();
+    
+    County getCountyById(Integer countyId);
 }

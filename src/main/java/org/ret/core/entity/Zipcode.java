@@ -6,32 +6,42 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name="county")
+@Table(name="zipcode")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class County implements Serializable{
+public class Zipcode implements Serializable{
 
     private static final long serialVersionUID = -2591179742871642538L;
     
     @Id
-    @Column(name="COUNTY_ID")
-    private Integer countyId;
+    @Column(name="AREA_ID")
+    private Integer areaId;
 
-    @Column(name="NAME")
-    private String county;
+    @Column(name="ZIPCODE")
+    private String zipcode;
 
-    public Integer getCountyId() {
-        return countyId;
+    @ManyToOne
+    @JoinColumn(name="CITY_ID")
+    private City city;
+
+    public Integer getAreaId() {
+        return areaId;
     }
 
-    public String getCounty() {
-        return county;
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public City getCity() {
+        return city;
     }
 
 }
