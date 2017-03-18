@@ -38,7 +38,7 @@ public class PriceRptController extends AbstractController {
         
         List<PropAddrPriceRptDto> propAddrPriceRptDtos = priceRptService.getPropAddrPriceRpts(countyId, cityId, zipcode, propTypeId);
         if (propAddrPriceRptDtos != null) {
-            return successResponse("cities", propAddrPriceRptDtos);
+            return successResponse("priceRpts", propAddrPriceRptDtos);
         }
         return notFound(NO_PROP_ADDR_PRICE_RPT_FOUND);
     }

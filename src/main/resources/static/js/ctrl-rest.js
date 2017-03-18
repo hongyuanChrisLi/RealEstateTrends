@@ -124,6 +124,15 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log, share
 });
 
 
+app.controller('propAddrPriceRptCtrl', function($scope, $http,  $log){
+  $http({
+    method : 'GET',
+    url : '/price-rpt/prop-addr/0-0-0-0'
+  }).then(function successCallback(response){
+    $log.info(response.data.responseData.priceRpts);
+  });
+})
+
 // Controller for verification
 app.controller('viewCtrl', function($scope, $log, sharedProperties){
   
