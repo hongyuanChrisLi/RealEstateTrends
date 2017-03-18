@@ -8,6 +8,9 @@
                 <div ng-controller="countyOptCtrl">
                 	<select class="btn" ng-model="selectedCounty" ng-change="onChange()" ng-options="x.county for x in counties"></select>
                 </div>
+                <div ng-controller="cityOptCtrl">
+                	<select class="btn" ng-model="selectedCity" ng-mouseenter="onEnter()" ng-change="onChange()"  ng-options="x.city for x in cities"></select>
+                </div>
                 <div ng-controller="viewCtrl">
                 	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{countyId}}</a>
                 </div>
