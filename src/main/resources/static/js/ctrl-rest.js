@@ -3,69 +3,133 @@
 var app = angular.module("app");
 
 app.service('sharedProperties', function() {
-  var selectedCountyId = 0;
-  var selectedCityId = 0;
+  var selCountyId = 0;
+  var selCityId = 0;
+  var selZipcode = '0';
   
   return {
-    getSelectedCountyId: function(){
-      return selectedCountyId;
+    
+    getSelCountyId: function(){
+      return selCountyId;
     },
-    setSetlectedCountyId: function(value){
-      selectedCountyId = value;
+    setSelCountyId: function(value){
+      selCountyId = value;
     },
-    getSelectedCityId: function(){
-      return selectedCityId;
+    
+    getSelCityId: function(){
+      return selCityId;
     },
-    setSelectedCityId: function(value){
-      selectedCityId = value;
+    setSelCityId: function(value){
+      selCityId = value;
+    },
+    
+    getSelZipcode: function(){
+      return selZipcode;
+    },
+    setSelZipcode: function(value){
+      selZipcode = value;
     }
+   
   };
   
 });
 
 
 // Controller for County dropdown list
-app.controller('countyOptCtrl', function($scope, $http, $log, sharedProperties){
+app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log, sharedProperties){
   $http({
     method : 'GET',
     url : '/area/county'
   }).then(function successCallback(response){
-    $scope.counties = response.data.responseData.counties;
-    $scope.counties.unshift({'county': 'All', 'countyId': 0})
-    $scope.selectedCounty = $scope.counties[0]
+    $scope.countyObjs = response.data.responseData.counties;
+    $scope.countyObjs.unshift({'county': 'All', 'countyId': 0})
+    $scope.selCountyObj = $scope.countyObjs[0]
     $scope.onChange = function(){
-      sharedProperties.setSetlectedCountyId($scope.selectedCounty.countyId);
+      $rootScope.$broadcast('countyListener', {countyId : $scope.selCountyObj.countyId});
+      sharedProperties.setSelCountyId($scope.selCountyObj.countyId)
     }
   })
 });
 
-
-// Controller for City dropdown list
-app.controller('cityOptCtrl', function($scope, $http, $log, sharedProperties){
-  $scope.selectedCityId = sharedProperties.getSelectedCityId();
-  $scope.cities = [{'city': 'All', 'cityId': 0}]
-  $scope.selectedCity = $scope.cities[$scope.selectedCityId];
-  $scope.onEnter = function(){
-    $scope.countyId = sharedProperties.getSelectedCountyId();
+//Controller for City dropdown list
+app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log, sharedProperties){
+  
+  // initialization
+  $scope.cityObjs = [{'city': 'All', 'cityId': 0}]
+  $scope.selCityObj = $scope.cityObjs[0]
+  
+  var cleanupFunc = $rootScope.$on('countyListener', function(event, args){
+    var countyId = args.countyId;
+    
+    // Rest API call
     $http({
       method : 'GET',
-      url : '/area/city/' + $scope.countyId
+      url : '/area/city/' + countyId
     }).then(function successCallback(response){
-      $scope.cities = response.data.responseData.cities;
-      $scope.cities.unshift({'city': 'All', 'cityId': 0})
-      $scope.selectedCity = $scope.cities[0]
-    })
-  };
-  $scope.OnChange = function(){
-    sharedProperties.setSelectedCityId($scope.selectedCity.cityId);
+      $scope.cityObjs = response.data.responseData.cities;
+      $scope.cityObjs.unshift({'city': 'All', 'cityId': 0})
+      $scope.selCityObj = $scope.cityObjs[0]
+    });
+    
+    // Reset downstream
+    $rootScope.$broadcast('cityListener', {cityId : 0});
+  });
+
+  $scope.onChange = function(){ 
+    $rootScope.$broadcast('cityListener', {cityId : $scope.selCityObj.cityId});
+    sharedProperties.setSelCityId($scope.selCityObj.cityId)
+   };
+  
+  $scope.$on('$destroy', function(){
+    cleanupFunc();
+  });
+});
+
+
+//Controller for Zipcode dropdown list
+app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log, sharedProperties){
+  
+  // functions
+  var initFunc = function() {
+    $scope.zipcodeObjs = [{'zipcode': 'All'}]
+    $scope.selZipcodeObj = $scope.zipcodeObjs[0]
   }
   
+  // Core
+  initFunc();
+  var cleanupFunc = $rootScope.$on('cityListener', function(event, args){
+    var cityId = args.cityId;
+    if (cityId == 0 ){
+      initFunc();
+    } else {
+      $http({
+        method : 'GET',
+        url : '/area/zipcode/' + cityId
+      }).then(function successCallback(response){
+        $scope.zipcodeObjs = response.data.responseData.zipcodes;
+        $scope.zipcodeObjs.unshift({'zipcode': 'All'})
+        $scope.selZipcodeObj = $scope.zipcodeObjs[0]
+      });
+    }
+  });
+
+  $scope.onChange = function(){ 
+    $log.info(sharedProperties)
+    sharedProperties.setSelZipcode($scope.selZipcodeObj.zipcode)
+   };
+  
+  $scope.$on('$destroy', function(){
+    cleanupFunc();
+  });
 });
+
 
 // Controller for verification
 app.controller('viewCtrl', function($scope, $log, sharedProperties){
-  $scope.countyId = sharedProperties.getSelectedCountyId();
-  $scope.onClick = function(){
-    $scope.countyId = sharedProperties.getSelectedCountyId();
+  
+  $scope.onClick = function() {
+    $scope.selCountyId = sharedProperties.getSelCountyId()
+    $scope.selCityId = sharedProperties.getSelCityId()
+    $scope.selZipcode = sharedProperties.getSelZipcode()
   }
 })

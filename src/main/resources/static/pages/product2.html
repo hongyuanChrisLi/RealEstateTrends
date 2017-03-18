@@ -6,13 +6,16 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
                 <div ng-controller="countyOptCtrl">
-                	<select class="btn" ng-model="selectedCounty" ng-change="onChange()" ng-options="x.county for x in counties"></select>
+                	<select class="btn" ng-model="selCountyObj" ng-change="onChange()" ng-options="x.county for x in countyObjs"></select>
                 </div>
                 <div ng-controller="cityOptCtrl">
-                	<select class="btn" ng-model="selectedCity" ng-mouseenter="onEnter()" ng-change="onChange()"  ng-options="x.city for x in cities"></select>
+	                	<select class="btn" ng-model="selCityObj" ng-change="onChange()" ng-options="x.city for x in cityObjs"></select>
+	            </div>
+                <div ng-controller="zipcodeOptCtrl">
+                	<select class="btn" ng-model="selZipcodeObj" ng-mouseenter="onEnter()" ng-change="onChange()"  ng-options="x.zipcode for x in zipcodeObjs"></select>
                 </div>
                 <div ng-controller="viewCtrl">
-                	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{countyId}}</a>
+                	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{selCountyId}} | {{selCityId}} | {{selZipcode}}</a>
                 </div>
             </div>
             <img class="picture right" src="images/house_icon1.png" />
