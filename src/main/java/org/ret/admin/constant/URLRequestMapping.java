@@ -9,4 +9,6 @@ public interface URLRequestMapping {
     String AREA_CITY_MAPPING = "/area/city";
     String AREA_ZIPCODE_MAPPING = "/area/zipcode";
     
+    String PRICE_RPT_PROP_ADDR_MAPPING = "/price-rpt/prop-addr";
+    
 }

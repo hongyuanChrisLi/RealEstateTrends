@@ -10,4 +10,11 @@ public interface SQLQueryConstant {
     String SQL_CITY_BY_ID = "from City where cityId = :cityId";
     
     String SQL_CITY_ZIPCODES = "from Zipcode where city = :city";
+    
+    String SQL_PROP_ADDR_PRICE_RPTS = "from PropAddrPriceRpt"
+            + " where countyId = :countyId"
+            + " and cityId = :cityId"
+            + " and zipcode = :zipcode"
+            + " and propTypeId = :propTypeId"
+            + " order by rptDate";
 }
