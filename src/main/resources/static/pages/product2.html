@@ -6,9 +6,11 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
                 <div ng-controller="countyOptCtrl">
-                	<select class="btn" ng-model="selectedCounty" ng-options="x for x in names"></select>
+                	<select class="btn" ng-model="selectedCounty" ng-change="onChange()" ng-options="x.county for x in counties"></select>
                 </div>
-                <a class="btn" href="javascript: void(0)">download the app</a>
+                <div ng-controller="viewCtrl">
+                	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{countyId}}</a>
+                </div>
             </div>
             <img class="picture right" src="images/house_icon1.png" />
             <div style="clear:both"></div>
