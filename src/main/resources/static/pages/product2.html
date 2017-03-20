@@ -17,8 +17,21 @@
                 <div ng-controller="viewCtrl">
                 	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{selCountyId}} | {{selCityId}} | {{selZipcode}}</a>
                 </div>
+                <div ng-controller="selAreaRptCtrl"></div>
+				
+				<div class="chart" ng-controller="selAreaLineCtrl">
+					<canvas id="line" class="chart chart-line" chart-data="data"
+						chart-labels="labels" chart-series="series" chart-options="options"
+						chart-dataset-override="datasetOverride" chart-click="onClick">
+					</canvas>
+				</div>
+            
             </div>
             <img class="picture right" src="images/house_icon1.png" />
+            
+
+    		
+
             <div style="clear:both"></div>
         </div>
     </div>
