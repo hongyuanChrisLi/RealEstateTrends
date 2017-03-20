@@ -2,39 +2,6 @@
 
 var app = angular.module("app");
 
-app.service('sharedProperties', function() {
-  var selCountyId = 0;
-  var selCityId = 0;
-  var selZipcode = '0';
-  
-  return {
-    
-    getSelCountyId: function(){
-      return selCountyId;
-    },
-    setSelCountyId: function(value){
-      selCountyId = value;
-    },
-    
-    getSelCityId: function(){
-      return selCityId;
-    },
-    setSelCityId: function(value){
-      selCityId = value;
-    },
-    
-    getSelZipcode: function(){
-      return selZipcode;
-    },
-    setSelZipcode: function(value){
-      selZipcode = value;
-    }
-   
-  };
-  
-});
-
-
 // Controller for County dropdown list
 app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log, sharedProperties){
   $http({
@@ -124,21 +91,81 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log, share
 });
 
 
-app.controller('propAddrPriceRptCtrl', function($scope, $http,  $log){
+app.controller('propAddrPriceRptCtrl', function($scope, $http,  $log, overallData){
   $http({
     method : 'GET',
     url : '/price-rpt/prop-addr/0-0-0-0'
   }).then(function successCallback(response){
-    $log.info(response.data.responseData.priceRpts);
+    overallData.appendData(response.data.responseData.priceRpts)
   });
 })
 
 // Controller for verification
-app.controller('viewCtrl', function($scope, $log, sharedProperties){
+app.controller('viewCtrl', function($scope, $log, sharedProperties, overallData){
   
   $scope.onClick = function() {
     $scope.selCountyId = sharedProperties.getSelCountyId()
     $scope.selCityId = sharedProperties.getSelCityId()
     $scope.selZipcode = sharedProperties.getSelZipcode()
+  }
+})
+
+
+app.service('sharedProperties', function() {
+  var selCountyId = 0;
+  var selCityId = 0;
+  var selZipcode = '0';
+  
+  return {
+    
+    getSelCountyId: function(){
+      return selCountyId;
+    },
+    setSelCountyId: function(value){
+      selCountyId = value;
+    },
+    
+    getSelCityId: function(){
+      return selCityId;
+    },
+    setSelCityId: function(value){
+      selCityId = value;
+    },
+    
+    getSelZipcode: function(){
+      return selZipcode;
+    },
+    setSelZipcode: function(value){
+      selZipcode = value;
+    }
+   
+  };
+  
+});
+
+app.service('overallData', function(){
+  var data = [];
+  var labels = [];
+  
+  return {
+    getData: function(){
+      return data;
+    },
+    getLabels: function() {
+      return labels;
+    },
+    appendData: function(priceRpts){
+      
+      var len = priceRpts.length;
+      for ( var i = 0; i < len; i++){
+        var value = priceRpts[i];
+        var dateStr = value.rptDate;
+        var dateA = dateStr.split("-")
+        var date = new Date(dateA[0], dateA[1], dateA[2])
+        var item = {x: date, y: value.avgPriceStructSqft};
+        data.push(item);
+        labels.push(dateStr);
+      }
+    },
   }
 })

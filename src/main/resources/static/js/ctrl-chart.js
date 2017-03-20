@@ -2,6 +2,34 @@
 
 var app = angular.module("app");
 
+app.controller("allAreaTrendLineCtr", function($scope, overallData){
+  // $scope.labels = overallData.getLabels();
+  $scope.series = ['Series A'];
+  $scope.data = overallData.getData();
+  $scope.datasetOverride = [{yAxisID: 'y-axis-1'}];
+  $scope.options = {
+    scales: {
+      xAxes: [{
+          type: "time",
+          display: true,
+          scaleLabel: {
+              display: true,
+              labelString: 'Date'
+          }
+      }],
+      yAxes: [{
+          display: true,
+          scaleLabel: {
+              display: true,
+              labelString: 'value'
+          }
+      }]
+    }
+  };
+  
+})
+
+
 // Controller for chart
 app.controller("LineCtrl", function($scope) {
 
