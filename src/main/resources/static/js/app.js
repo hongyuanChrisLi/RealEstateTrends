@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 // angular.js main app initialization
-var app = angular.module('app', ['ngRoute', 'chart.js']).config(
+var app = angular.module('app', ['ngRoute', 'chart.js', 'tc.chartjs']).config(
         ['$routeProvider', function($routeProvider) {
           $routeProvider.when('/', {
             templateUrl: 'pages/index.html',

@@ -2,11 +2,19 @@
     <a class="chartBox" style="background-color:#ffffe6">
     	<div class="wrap">
     		<div ng-controller="allAreaRptCtrl">
-    			<div class="chart" ng-controller="allAreaLineCtrl">
+    			<div class="chart" ng-controller="LineCtrl">
 					<canvas id="line" class="chart chart-line" chart-data="data"
 						chart-labels="labels" chart-series="series" chart-options="options"
-						chart-dataset-override="datasetOverride" chart-click="onClick">
+						chart-hover="false" chart-click="false">
 					</canvas>
+				</div>
+				<div class="chart" ng-controller="allAreaLineTcCtrl">
+					<canvas
+					  tc-chartjs-line
+					  chart-data="myData"
+					  chart-options="myOptions"
+					  chart-click="onChartClick(event)"
+					></canvas>
 				</div>
     		</div>
 		</div>

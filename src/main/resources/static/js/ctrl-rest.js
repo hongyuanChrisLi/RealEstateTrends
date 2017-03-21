@@ -112,7 +112,9 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
 });
 
 // 
-app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log, allAreaData) {
+app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
+        allAreaData) {
+
   $http({
     method: 'GET',
     url: '/price-rpt/prop-addr/0-0-0-0'
@@ -120,17 +122,16 @@ app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log, allAr
           function successCallback(response) {
             allAreaData.parseData(response.data.responseData.priceRpts,
                     'avgPriceStructSqft');
-           $log.info(allAreaData.getData());
-           $rootScope.$broadcast('allAreaDrawlistener');
+            $log.info(allAreaData.getData());
+            $rootScope.$broadcast('allAreaDrawlistener');
           });
 });
-
 
 // 
 app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
         selProperties, selAreaData) {
 
-  var cleanupFunc = $rootScope.$on('selAreaListener', function(event, args) {
+  var dataUpdFunc = function() {
     $http(
             {
               method: 'GET',
@@ -143,6 +144,11 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
                       'avgPriceStructSqft');
               $rootScope.$broadcast('selAreaDrawlistener');
             });
+  };
+
+  dataUpdFunc();
+  var cleanupFunc = $rootScope.$on('selAreaListener', function(event, args) {
+    dataUpdFunc();
   });
 
   $rootScope.$on('$destroy', function() {
@@ -199,14 +205,24 @@ app.service('selProperties', function() {
 //
 app.service('allAreaData', ['genericDataExtract', function(genericDataExtract) {
   var data = [];
+  var labels = [];
+  var prices = [];
   
   return {
     getData: function() {
       return data;
     },
+    getLabels: function() {
+      return labels;
+    },
+    getPrices: function() {
+      return prices;
+    },
     parseData: function(priceRpts, priceType) {
       genericDataExtract.parseData(priceRpts, priceType);
       data = genericDataExtract.getData();
+      labels = genericDataExtract.getLabels();
+      prices = genericDataExtract.getPrices();
     }
   }
 }]);
@@ -214,7 +230,7 @@ app.service('allAreaData', ['genericDataExtract', function(genericDataExtract) {
 //
 app.service('selAreaData', ['genericDataExtract', function(genericDataExtract) {
   var data = [];
-  
+
   return {
     getData: function() {
       return data;
@@ -228,6 +244,7 @@ app.service('selAreaData', ['genericDataExtract', function(genericDataExtract) {
 
 app.service('genericDataExtract', function() {
   var data = [];
+  var prices = [];
   var labels = [];
 
   return {
@@ -237,11 +254,14 @@ app.service('genericDataExtract', function() {
     getLabels: function() {
       return labels;
     },
+    getPrices: function(){
+      return prices;
+    },
     parseData: function(priceRpts, priceType) {
-      
+
       data = [];
       labels = [];
-      
+
       var len = priceRpts.length;
       for (var i = 0; i < len; i++) {
         var value = priceRpts[i];
@@ -254,6 +274,7 @@ app.service('genericDataExtract', function() {
         };
         data.push(item);
         labels.push(dateStr);
+        prices.push(value[priceType]);
       }
     },
   }
