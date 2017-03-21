@@ -20,10 +20,10 @@
                 <div ng-controller="selAreaRptCtrl"></div>
 				
 				<div class="chart" ng-controller="selAreaLineCtrl">
-					<canvas id="line" class="chart chart-line" chart-data="data"
-						chart-labels="labels" chart-series="series" chart-options="options"
-						chart-dataset-override="datasetOverride" chart-click="onClick">
-					</canvas>
+					<div class="chart" ng-controller="selAreaLineCtrl">
+					<canvas tc-chartjs-line chart-data="myData"
+						chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+				</div>
 				</div>
             
             </div>
