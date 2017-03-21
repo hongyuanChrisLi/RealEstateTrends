@@ -1,39 +1,53 @@
-<div style="width:100%">
-    <div class="projectHead" style="background-color:#87b822">
-        <div class="wrap">
-            <div class="text left">
-                <h1>Product 2 page</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-                <div ng-controller="countyOptCtrl">
-                	<select class="btn" ng-model="selCountyObj" ng-change="onChange()" ng-options="x.county for x in countyObjs"></select>
-                </div>
-                <div ng-controller="cityOptCtrl">
-	                	<select class="btn" ng-model="selCityObj" ng-change="onChange()" ng-options="x.city for x in cityObjs"></select>
-	            </div>
-                <div ng-controller="zipcodeOptCtrl">
-                	<select class="btn" ng-model="selZipcodeObj" ng-mouseenter="onEnter()" ng-change="onChange()"  ng-options="x.zipcode for x in zipcodeObjs"></select>
-                </div>
-                <div ng-controller="viewCtrl">
-                	<a class="btn" ng-click="onClick()" href="javascript: void(0)">download the app {{selCountyId}} | {{selCityId}} | {{selZipcode}}</a>
-                </div>
-                <div ng-controller="selAreaRptCtrl"></div>
-				
-				<div class="chart" ng-controller="selAreaLineCtrl">
-					<div class="chart" ng-controller="selAreaLineCtrl">
-					<canvas tc-chartjs-line chart-data="myData"
-						chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+<div style="width: 100%">
+	<div class="projectHead" style="background-color: #87b822">
+		<div class="wrap">
+			<div class="text left">
+				<h1>Product 2 page</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+					et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium
+					semper venenatis. In adipiscing augue elit, at venenatis enim
+					suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+					et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium
+					semper venenatis. In adipiscing augue elit, at venenatis enim
+					suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
+				<div ng-controller="countyOptCtrl">
+					<select class="dropdown" ng-model="selCountyObj" ng-change="onChange()"
+						ng-options="x.county for x in countyObjs"></select>
 				</div>
+				<div ng-controller="cityOptCtrl">
+					<select class="dropdown" ng-model="selCityObj" ng-change="onChange()"
+						ng-options="x.city for x in cityObjs"></select>
 				</div>
-            
-            </div>
-            <img class="picture right" src="images/house_icon1.png" />
-            
-
-    		
-
-            <div style="clear:both"></div>
+				<div ng-controller="zipcodeOptCtrl">
+					<select class="dropdown" ng-model="selZipcodeObj"
+						ng-mouseenter="onEnter()" ng-change="onChange()"
+						ng-options="x.zipcode for x in zipcodeObjs"></select>
+				</div>
+				<p></p>
+			</div>
+			<div class="right">
+				<img class="picture right" src="images/house_icon1.png" />
+				<div ng-controller="viewCtrl">
+					<a class="btn" ng-click="onClick()" href="#!/project/product2#chart">Update Chart</a>
+				</div>
+			</div>
+			<div style="clear: both"></div>
+		</div>
+	</div>
+	<div style="background-color:#f5f5f5">
+        <div class="wrap about">
+        	<section id="chart">
+        		<div ng-controller="selAreaRptCtrl"></div>
+        		<div class="chart right" ng-controller="selAreaLineCtrl" style="background-color: #ffffe6">
+					<div class="wrap">
+						<canvas width="440" height="300" tc-chartjs-line chart-data="myData"
+							chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+					</div>
+				</div>
+        	</section>
         </div>
     </div>
-    <ng-include src="'pages/footer.html'"></ng-include>
+	
+	<ng-include src="'pages/footer.html'"></ng-include>
 </div>

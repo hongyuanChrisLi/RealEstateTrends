@@ -14,9 +14,9 @@ app.controller("allAreaLineCtrl", function($rootScope, $scope, $log, chartServic
 });
 
 
-app.controller("selAreaLineCtrl", function($rootScope, $scope, chartService, selAreaData) {
+app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, selAreaData) {
   var cleanupFunc = $rootScope.$on('selAreaDrawlistener', function(){
-    chartService.draw($scope, selAreaData);
+    selChartService.draw($scope, selAreaData);
   });
  
   $rootScope.$on('$destroy', function() {
@@ -25,6 +25,16 @@ app.controller("selAreaLineCtrl", function($rootScope, $scope, chartService, sel
   
 })
 
+app.service('selChartService', ['chartService', function(chartService){
+  return {
+    draw($scope, data){
+      chartService.draw($scope, data);
+      $scope.myData.datasets[0].pointBorderColor = "rgba(215, 173, 66, 1)";
+      $scope.myData.datasets[0].borderColor = "rgba(215, 173, 66, 1)";
+      $scope.myData.datasets[0].backgroundColor = "rgba(75,192,192,1)";
+    }
+  }
+}]);
 
 app.service('chartService', function(){
   return {
@@ -63,4 +73,4 @@ app.service('chartService', function(){
           }
       }
   }
-})
+});
