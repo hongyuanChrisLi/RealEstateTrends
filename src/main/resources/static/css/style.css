@@ -32,6 +32,10 @@ h1 {
   font-size:3.5em;
   font-weight:100;
 }
+h2 {
+  font-size:2.5em;
+  font-weight:100;
+}
 p {
   font-size:1.5em;
 }
@@ -253,9 +257,9 @@ footer .copyright {
 }
 
 .projectHead .picture {
-  margin-bottom:6%;
-  margin-top:6%;
-  width:150%;
+  margin-bottom:0%;
+  margin-top:5%;
+  width:15%;
 }
 .projectHead .picture.right {
   margin-right:-3.5%;
@@ -271,8 +275,14 @@ footer .copyright {
   text-align:center;
   width:55%;
 }
+.projectHead .smallText {
+  margin-bottom:0%;
+  margin-top:5%;
+  font-size:0.9em;
+}
 .projectHead .btn {
-  float:bottom;
+  background-color:#9999ff;
+  color:#fff;
 }
 .projectHead .chart {
   margin-bottom:5%;

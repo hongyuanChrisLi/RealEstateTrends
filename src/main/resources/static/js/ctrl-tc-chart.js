@@ -29,7 +29,7 @@ app.service('selChartService', ['chartService', function(chartService){
   return {
     draw($scope, data){
       chartService.draw($scope, data);
-      $scope.myData.datasets[0].pointBorderColor = "rgba(215, 173, 66, 1)";
+      // $scope.myData.datasets[0].pointBorderColor = "rgba(215, 173, 66, 1)";
       $scope.myData.datasets[0].borderColor = "rgba(215, 173, 66, 1)";
       $scope.myData.datasets[0].backgroundColor = "rgba(75,192,192,1)";
     }
@@ -57,7 +57,7 @@ app.service('chartService', function(){
               pointHoverBackgroundColor: "rgba(75,192,192,1)",
               pointHoverBorderColor: "rgba(220,220,220,1)",
               pointHoverBorderWidth: 2,
-              pointRadius: 1,
+              pointRadius: 2,
               pointHitRadius: 10,
               data: data.getData()
             }]

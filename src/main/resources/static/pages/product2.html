@@ -1,36 +1,35 @@
 <div style="width: 100%">
 	<div class="projectHead" style="background-color: #87b822">
 		<div class="wrap">
-			<div class="text left">
-				<h1>Product 2 page</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-					et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium
-					semper venenatis. In adipiscing augue elit, at venenatis enim
-					suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-					et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium
-					semper venenatis. In adipiscing augue elit, at venenatis enim
-					suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
+			<div class="left">
+				<h2>Real Estate Trends</h2>
+				<img class="picture left" src="images/house_icon1.png" />
+				<p>Select county, city or zipcode you are interested in </p>
+				
+			</div>
+			
+			<div class="right">
+				
+				<div class="smallText">County</div>
 				<div ng-controller="countyOptCtrl">
 					<select class="dropdown" ng-model="selCountyObj" ng-change="onChange()"
 						ng-options="x.county for x in countyObjs"></select>
 				</div>
+				<div class="smallText">City</div>
 				<div ng-controller="cityOptCtrl">
 					<select class="dropdown" ng-model="selCityObj" ng-change="onChange()"
 						ng-options="x.city for x in cityObjs"></select>
 				</div>
+				<div class="smallText">Zipcode</div>
 				<div ng-controller="zipcodeOptCtrl">
 					<select class="dropdown" ng-model="selZipcodeObj"
 						ng-mouseenter="onEnter()" ng-change="onChange()"
 						ng-options="x.zipcode for x in zipcodeObjs"></select>
 				</div>
-				<p></p>
-			</div>
-			<div class="right">
-				<img class="picture right" src="images/house_icon1.png" />
 				<div ng-controller="viewCtrl">
-					<a class="btn" ng-click="onClick()" href="#!/project/product2#chart">Update Chart</a>
+					<a class="btn" ng-click="onClick()">Update Chart</a>
 				</div>
+				
 			</div>
 			<div style="clear: both"></div>
 		</div>
@@ -39,6 +38,12 @@
         <div class="wrap about">
         	<section id="chart">
         		<div ng-controller="selAreaRptCtrl"></div>
+        		<div class="chart left" ng-controller="selAreaLineCtrl" style="background-color: #ffffe6">
+					<div class="wrap">
+						<canvas width="440" height="300" tc-chartjs-line chart-data="myData"
+							chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+					</div>
+				</div>
         		<div class="chart right" ng-controller="selAreaLineCtrl" style="background-color: #ffffe6">
 					<div class="wrap">
 						<canvas width="440" height="300" tc-chartjs-line chart-data="myData"
