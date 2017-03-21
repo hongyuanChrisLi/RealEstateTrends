@@ -26,6 +26,12 @@
 						ng-mouseenter="onEnter()" ng-change="onChange()"
 						ng-options="x.zipcode for x in zipcodeObjs"></select>
 				</div>
+				<div class="smallText">Property Type</div>
+				<div ng-controller="propTypeOptCtrl">
+					<select class="dropdown" ng-model="selpropTypeObj"
+						ng-mouseenter="onEnter()" ng-change="onChange()"
+						ng-options="x.type for x in propTypeObjs"></select>
+				</div>
 				<div ng-controller="viewCtrl">
 					<a class="btn" ng-click="onClick()">Update Chart</a>
 				</div>

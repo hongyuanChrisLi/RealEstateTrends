@@ -2,9 +2,11 @@
 
 var app = angular.module("app");
 
-// Controller for County dropdown list
+/*************************/
+/* Controller for County dropdown list */
+/*************************/
 app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
-        selProperties) {
+        selCritiriaSvc) {
   $http({
     method: 'GET',
     url: '/area/county'
@@ -19,14 +21,17 @@ app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
       $rootScope.$broadcast('countyListener', {
         countyId: $scope.selCountyObj.countyId
       });
-      selProperties.setSelCountyId($scope.selCountyObj.countyId)
+      selCritiriaSvc.setSelCountyId($scope.selCountyObj.countyId);
+      selCritiriaSvc.setSelCityId(0);
     }
   })
 });
 
-// Controller for City dropdown list
+/*************************/
+/* Controller for City dropdown list */
+/*************************/
 app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
-        selProperties) {
+        selCritiriaSvc) {
 
   // initialization
   $scope.cityObjs = [{
@@ -55,13 +60,15 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
     $rootScope.$broadcast('cityListener', {
       cityId: 0
     });
+    selCritiriaSvc.setSelZipcode('0');
   });
 
   $scope.onChange = function() {
     $rootScope.$broadcast('cityListener', {
       cityId: $scope.selCityObj.cityId
     });
-    selProperties.setSelCityId($scope.selCityObj.cityId)
+    selCritiriaSvc.setSelCityId($scope.selCityObj.cityId)
+    selCritiriaSvc.setSelZipcode('0');
   };
 
   $rootScope.$on('$destroy', function() {
@@ -69,9 +76,11 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
   });
 });
 
-// Controller for Zipcode dropdown list
+/*************************/
+/* Controller for Zipcode dropdown list */
+/*************************/
 app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
-        selProperties) {
+        selCritiriaSvc) {
 
   // functions
   var initFunc = function() {
@@ -102,8 +111,7 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
   });
 
   $scope.onChange = function() {
-    $log.info(selProperties)
-    selProperties.setSelZipcode($scope.selZipcodeObj.zipcode)
+    selCritiriaSvc.setSelZipcode($scope.selZipcodeObj.zipcode)
   };
 
   $rootScope.$on('$destroy', function() {
@@ -111,7 +119,22 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
   });
 });
 
-// 
+/*************************/
+/* Controller for Type dropdown list */
+/*************************/
+app.controller('propTypeOptCtrl', function($rootScope, $scope, $log,
+        selCritiriaSvc, propTypeSvc) {
+  $scope.propTypeObjs = propTypeSvc.getPropTypes();
+  $scope.selpropTypeObj =  $scope.propTypeObjs[selCritiriaSvc.getSelTypeId()];
+
+  $scope.onChange = function() {
+    selCritiriaSvc.setSelTypeId($scope.selpropTypeObj.typeId)
+  };
+});
+
+/*************************/
+/* Select Rest data for the entire area */
+/*************************/
 app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
         allAreaData) {
 
@@ -127,23 +150,27 @@ app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
           });
 });
 
-// 
+/*************************/
+/* Select Rest data for a specific area */
+/*************************/
 app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
-        selProperties, selAreaData) {
+        selCritiriaSvc, selAreaData) {
 
   var dataUpdFunc = function() {
-    $http(
-            {
-              method: 'GET',
-              url: '/price-rpt/prop-addr/' + selProperties.getSelCountyId()
-                      + '-' + selProperties.getSelCityId() + '-'
-                      + selProperties.getSelZipcode() + '-0'
-            }).then(
+    var url = '/price-rpt/prop-addr/' + selCritiriaSvc.getSelCountyId() + '-'
+            + selCritiriaSvc.getSelCityId() + '-'
+            + selCritiriaSvc.getSelZipcode() + '-'
+            + selCritiriaSvc.getSelTypeId();
+    $http({
+      method: 'GET',
+      url: url
+    }).then(
             function successCallback(response) {
               selAreaData.parseData(response.data.responseData.priceRpts,
                       'avgPriceStructSqft');
               $rootScope.$broadcast('selAreaDrawlistener');
             });
+    $log.info(url)
   };
 
   dataUpdFunc();
@@ -157,23 +184,28 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
 
 });
 
-// Controller for verification
-app.controller('viewCtrl', function($rootScope, $scope, $log, selProperties) {
+/*************************/
+/* Controller for verification */
+/*************************/
+app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
 
   $scope.onClick = function() {
-    $scope.selCountyId = selProperties.getSelCountyId()
-    $scope.selCityId = selProperties.getSelCityId()
-    $scope.selZipcode = selProperties.getSelZipcode()
-    $log.info(selProperties)
+    $scope.selCountyId = selCritiriaSvc.getSelCountyId()
+    $scope.selCityId = selCritiriaSvc.getSelCityId()
+    $scope.selZipcode = selCritiriaSvc.getSelZipcode()
+    $log.info(selCritiriaSvc)
     $rootScope.$broadcast('selAreaListener');
   }
 })
 
-//
-app.service('selProperties', function() {
+/*************************/
+/* Service for sharing selected property data between controllers */
+/*************************/
+app.service('selCritiriaSvc', function() {
   var selCountyId = 0;
   var selCityId = 0;
   var selZipcode = '0';
+  var selTypeId = 0;
 
   return {
 
@@ -196,86 +228,53 @@ app.service('selProperties', function() {
     },
     setSelZipcode: function(value) {
       selZipcode = value;
+    },
+    
+    getSelTypeId: function(){
+      return selTypeId;
+    },
+    setSelTypeId: function(value){
+      selTypeId = value;
     }
-
   };
-
 });
 
-//
-app.service('allAreaData', ['genericDataExtract', function(genericDataExtract) {
-  var data = [];
-  var labels = [];
-  var prices = [];
+/*************************/
+/* Service for property type lookup */
+/*************************/
+app.service("propTypeSvc", function(){
+  var propTypes = [
+    {
+      type: "All",
+      typeId: 0
+    },
+    {
+      type: "Single Family",
+      typeId: 1
+    },
+    {
+      type: "Townhouse",
+      typeId: 2
+    },
+    {
+      type: "Condo",
+      typeId: 3
+    },
+    {
+      type: "Multi-Unit",
+      typeId: 4
+    },
+    {
+      type: "Mobile",
+      typeId: 5
+    }
+  ];
   
   return {
-    getData: function() {
-      return data;
-    },
-    getLabels: function() {
-      return labels;
-    },
-    getPrices: function() {
-      return prices;
-    },
-    parseData: function(priceRpts, priceType) {
-      genericDataExtract.parseData(priceRpts, priceType);
-      data = genericDataExtract.getData();
-      labels = genericDataExtract.getLabels();
-      prices = genericDataExtract.getPrices();
+    
+    getPropTypes: function() {
+      return propTypes;
     }
-  }
-}]);
-
-//
-app.service('selAreaData', ['genericDataExtract', function(genericDataExtract) {
-  var data = [];
-
-  return {
-    getData: function() {
-      return data;
-    },
-    parseData: function(priceRpts, priceType) {
-      genericDataExtract.parseData(priceRpts, priceType);
-      data = genericDataExtract.getData();
-    }
-  }
-}]);
-
-app.service('genericDataExtract', function() {
-  var data = [];
-  var prices = [];
-  var labels = [];
-
-  return {
-    getData: function() {
-      return data;
-    },
-    getLabels: function() {
-      return labels;
-    },
-    getPrices: function(){
-      return prices;
-    },
-    parseData: function(priceRpts, priceType) {
-
-      data = [];
-      labels = [];
-
-      var len = priceRpts.length;
-      for (var i = 0; i < len; i++) {
-        var value = priceRpts[i];
-        var dateStr = value.rptDate;
-        var dateA = dateStr.split("-")
-        var date = new Date(dateA[0], dateA[1], dateA[2])
-        var item = {
-          x: date,
-          y: value[priceType]
-        };
-        data.push(item);
-        labels.push(dateStr);
-        prices.push(value[priceType]);
-      }
-    },
   }
 })
+
