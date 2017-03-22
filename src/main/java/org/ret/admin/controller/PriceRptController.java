@@ -1,13 +1,16 @@
 package org.ret.admin.controller;
 
 import static org.ret.admin.constant.URLRequestMapping.PRICE_RPT_PROP_ADDR_MAPPING;
+import static org.ret.admin.constant.URLRequestMapping.PRICE_RPT_MLS_DAILY_MAPPING;
 import static org.ret.admin.error.ErrorCode.NO_PROP_ADDR_PRICE_RPT_FOUND;
+import static org.ret.admin.error.ErrorCode.NO_MLS_DAILY_RPT_FOUND;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.List;
 
 import org.ret.admin.service.PriceRptService;
 import org.ret.admin.service.dto.JsonResponseDto;
+import org.ret.admin.service.dto.MlsDailyRptDto;
 import org.ret.admin.service.dto.PropAddrPriceRptDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -41,5 +44,19 @@ public class PriceRptController extends AbstractController {
             return successResponse("priceRpts", propAddrPriceRptDtos);
         }
         return notFound(NO_PROP_ADDR_PRICE_RPT_FOUND);
+    }
+    
+    
+    @ApiOperation(value = "Return MLS Daily Report Dto", notes = "Get a daily report of a selected region")
+    @RequestMapping(value = PRICE_RPT_MLS_DAILY_MAPPING + "/{countyId}-{cityId}", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<JsonResponseDto> getMlsDailyRpt(
+            @PathVariable("countyId") Integer countyId, 
+            @PathVariable("cityId") Integer cityId){
+        
+        MlsDailyRptDto mlsDailyRptDto = priceRptService.getMlsDailyRptDtos(countyId, cityId);
+        if (mlsDailyRptDto != null) {
+            return successResponse("priceRpts", mlsDailyRptDto);
+        }
+        return notFound(NO_MLS_DAILY_RPT_FOUND);
     }
 }

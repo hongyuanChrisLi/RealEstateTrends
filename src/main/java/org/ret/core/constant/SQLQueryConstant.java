@@ -17,4 +17,8 @@ public interface SQLQueryConstant {
             + " and zipcode = :zipcode"
             + " and propTypeId = :propTypeId"
             + " order by rptDate";
+    
+    String SQL_MLS_DAILY_RPT = "from MlsDailyRpt"
+            + " where countyId = :countyId"
+            + " and cityId = :cityId";
 }

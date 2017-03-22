@@ -68,4 +68,5 @@ public class PropAddrPriceRptDto {
     public void setAvgPriceTotSqft(Float avgPriceTotSqft) {
         this.avgPriceTotSqft = avgPriceTotSqft;
     }
+   
 }

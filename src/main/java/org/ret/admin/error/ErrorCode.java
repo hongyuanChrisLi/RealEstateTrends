@@ -10,6 +10,7 @@ public enum ErrorCode {
     NO_ZIPCODE_FOUND,
     
     NO_PROP_ADDR_PRICE_RPT_FOUND,
+    NO_MLS_DAILY_RPT_FOUND,
     
     INTERNAL_SERVER_ERROR
 }
