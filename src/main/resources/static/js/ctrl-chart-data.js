@@ -1,6 +1,9 @@
 
 var app = angular.module("app");
 
+/*************************/
+/* Service for data from all areas */
+/*************************/
 app.service('allAreaData', ['genericDataExtract', function(genericDataExtract) {
   var data = [];
   var labels = [];
@@ -25,8 +28,10 @@ app.service('allAreaData', ['genericDataExtract', function(genericDataExtract) {
   }
 }]);
 
-//
-app.service('selAreaData', ['genericDataExtract', function(genericDataExtract) {
+/*************************/
+/* Service for data from selected areas (Price per Structure Sqft)*/
+/*************************/
+app.service('selAreaStructSqftData', ['genericDataExtract', function(genericDataExtract) {
   var data = [];
 
   return {
@@ -40,6 +45,28 @@ app.service('selAreaData', ['genericDataExtract', function(genericDataExtract) {
   }
 }]);
 
+/*************************/
+/* Service for data from selected areas (Price)*/
+/*************************/
+app.service('selAreaTotSqftData', ['genericDataExtract', function(genericDataExtract) {
+  var data = [];
+
+  return {
+    getData: function() {
+      return data;
+    },
+    parseData: function(priceRpts, priceType) {
+      genericDataExtract.parseData(priceRpts, priceType);
+      data = genericDataExtract.getData();
+    }
+  }
+}]);
+
+
+
+/*************************/
+/* Service for property type lookup */
+/*************************/
 app.service('genericDataExtract', function() {
   var data = [];
   var prices = [];

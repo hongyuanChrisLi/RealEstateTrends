@@ -2,9 +2,9 @@
 
 var app = angular.module("app");
 
-/*************************/
+/** ********************** */
 /* Controller for County dropdown list */
-/*************************/
+/** ********************** */
 app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
         selCritiriaSvc) {
   $http({
@@ -27,40 +27,50 @@ app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
   })
 });
 
-/*************************/
+/** ********************** */
 /* Controller for City dropdown list */
-/*************************/
+/** ********************** */
 app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
         selCritiriaSvc) {
 
   // initialization
-  $scope.cityObjs = [{
-    'city': 'All',
-    'cityId': 0
-  }]
-  $scope.selCityObj = $scope.cityObjs[0]
-
-  var cleanupFunc = $rootScope.$on('countyListener', function(event, args) {
-    var countyId = args.countyId;
-
-    // Rest API call
-    $http({
-      method: 'GET',
-      url: '/area/city/' + countyId
-    }).then(function successCallback(response) {
-      $scope.cityObjs = response.data.responseData.cities;
-      $scope.cityObjs.unshift({
-        'city': 'All',
-        'cityId': 0
-      })
-      $scope.selCityObj = $scope.cityObjs[0]
-    });
-
+  var resetZipFunc = function() {
     // Reset downstream
     $rootScope.$broadcast('cityListener', {
       cityId: 0
     });
     selCritiriaSvc.setSelZipcode('0');
+  }
+  
+  var initFunc = function() {
+    $scope.cityObjs = [{
+      'city': 'All',
+      'cityId': 0
+    }];
+    $scope.selCityObj = $scope.cityObjs[0];
+  }
+
+  initFunc();
+  resetZipFunc();
+  var cleanupFunc = $rootScope.$on('countyListener', function(event, args) {
+    var countyId = args.countyId;
+    if (countyId == 0) {
+      initFunc();
+    } else {
+      // Rest API call
+      $http({
+        method: 'GET',
+        url: '/area/city/' + countyId
+      }).then(function successCallback(response) {
+        $scope.cityObjs = response.data.responseData.cities;
+        $scope.cityObjs.unshift({
+          'city': 'All',
+          'cityId': 0
+        })
+        $scope.selCityObj = $scope.cityObjs[0]
+      });
+    }
+    resetZipFunc();
   });
 
   $scope.onChange = function() {
@@ -76,9 +86,9 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
   });
 });
 
-/*************************/
+/** ********************** */
 /* Controller for Zipcode dropdown list */
-/*************************/
+/** ********************** */
 app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
         selCritiriaSvc) {
 
@@ -111,7 +121,14 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
   });
 
   $scope.onChange = function() {
-    selCritiriaSvc.setSelZipcode($scope.selZipcodeObj.zipcode)
+
+    var zipcode = '0'
+
+    if ($scope.selZipcodeObj.zipcode != 'All') {
+      zipcode = $scope.selZipcodeObj.zipcode
+    }
+
+    selCritiriaSvc.setSelZipcode(zipcode)
   };
 
   $rootScope.$on('$destroy', function() {
@@ -119,22 +136,22 @@ app.controller('zipcodeOptCtrl', function($rootScope, $scope, $http, $log,
   });
 });
 
-/*************************/
+/** ********************** */
 /* Controller for Type dropdown list */
-/*************************/
+/** ********************** */
 app.controller('propTypeOptCtrl', function($rootScope, $scope, $log,
         selCritiriaSvc, propTypeSvc) {
   $scope.propTypeObjs = propTypeSvc.getPropTypes();
-  $scope.selpropTypeObj =  $scope.propTypeObjs[selCritiriaSvc.getSelTypeId()];
+  $scope.selpropTypeObj = $scope.propTypeObjs[selCritiriaSvc.getSelTypeId()];
 
   $scope.onChange = function() {
     selCritiriaSvc.setSelTypeId($scope.selpropTypeObj.typeId)
   };
 });
 
-/*************************/
+/** ********************** */
 /* Select Rest data for the entire area */
-/*************************/
+/** ********************** */
 app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
         allAreaData) {
 
@@ -150,11 +167,11 @@ app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
           });
 });
 
-/*************************/
+/** ********************** */
 /* Select Rest data for a specific area */
-/*************************/
+/** ********************** */
 app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
-        selCritiriaSvc, selAreaData) {
+        selCritiriaSvc, selAreaStructSqftData, selAreaTotSqftData) {
 
   var dataUpdFunc = function() {
     var url = '/price-rpt/prop-addr/' + selCritiriaSvc.getSelCountyId() + '-'
@@ -166,7 +183,10 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
       url: url
     }).then(
             function successCallback(response) {
-              selAreaData.parseData(response.data.responseData.priceRpts,
+              selAreaTotSqftData.parseData(
+                      response.data.responseData.priceRpts, 'avgPriceTotSqft');
+              selAreaStructSqftData.parseData(
+                      response.data.responseData.priceRpts,
                       'avgPriceStructSqft');
               $rootScope.$broadcast('selAreaDrawlistener');
             });
@@ -184,9 +204,9 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
 
 });
 
-/*************************/
+/** ********************** */
 /* Controller for verification */
-/*************************/
+/** ********************** */
 app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
 
   $scope.onClick = function() {
@@ -198,9 +218,9 @@ app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
   }
 })
 
-/*************************/
+/** ********************** */
 /* Service for sharing selected property data between controllers */
-/*************************/
+/** ********************** */
 app.service('selCritiriaSvc', function() {
   var selCountyId = 0;
   var selCityId = 0;
@@ -229,52 +249,44 @@ app.service('selCritiriaSvc', function() {
     setSelZipcode: function(value) {
       selZipcode = value;
     },
-    
-    getSelTypeId: function(){
+
+    getSelTypeId: function() {
       return selTypeId;
     },
-    setSelTypeId: function(value){
+    setSelTypeId: function(value) {
       selTypeId = value;
     }
   };
 });
 
-/*************************/
+/** ********************** */
 /* Service for property type lookup */
-/*************************/
-app.service("propTypeSvc", function(){
-  var propTypes = [
-    {
-      type: "All",
-      typeId: 0
-    },
-    {
-      type: "Single Family",
-      typeId: 1
-    },
-    {
-      type: "Townhouse",
-      typeId: 2
-    },
-    {
-      type: "Condo",
-      typeId: 3
-    },
-    {
-      type: "Multi-Unit",
-      typeId: 4
-    },
-    {
-      type: "Mobile",
-      typeId: 5
-    }
-  ];
-  
+/** ********************** */
+app.service("propTypeSvc", function() {
+  var propTypes = [{
+    type: "All",
+    typeId: 0
+  }, {
+    type: "Single Family",
+    typeId: 1
+  }, {
+    type: "Townhouse",
+    typeId: 2
+  }, {
+    type: "Condo",
+    typeId: 3
+  }, {
+    type: "Multi-Unit",
+    typeId: 4
+  }, {
+    type: "Mobile",
+    typeId: 5
+  }];
+
   return {
-    
+
     getPropTypes: function() {
       return propTypes;
     }
   }
 })
-

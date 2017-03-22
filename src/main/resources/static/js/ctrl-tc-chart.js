@@ -4,7 +4,7 @@ var app = angular.module("app");
 
 app.controller("allAreaLineCtrl", function($rootScope, $scope, $log, chartService, allAreaData) {
   var cleanupFunc = $rootScope.$on('allAreaDrawlistener', function() {
-    chartService.draw($scope, allAreaData);
+    chartService.draw($scope, allAreaData, "Real Estate Trends");
   });
 
   $rootScope.$on('$destroy', function() {
@@ -14,9 +14,9 @@ app.controller("allAreaLineCtrl", function($rootScope, $scope, $log, chartServic
 });
 
 
-app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, selAreaData) {
+app.controller("selAreaStructSqftLineCtrl", function($rootScope, $scope, selChartService, selAreaStructSqftData) {
   var cleanupFunc = $rootScope.$on('selAreaDrawlistener', function(){
-    selChartService.draw($scope, selAreaData);
+    selChartService.draw($scope, selAreaStructSqftData, "Trends: Price / Structure Sqft");
   });
  
   $rootScope.$on('$destroy', function() {
@@ -25,13 +25,38 @@ app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, 
   
 })
 
+app.controller("selAreaTotSqftLineCtrl", function($rootScope, $scope, selChartService, selAreaTotSqftData) {
+  var cleanupFunc = $rootScope.$on('selAreaDrawlistener', function(){
+    selChartService.draw($scope, selAreaTotSqftData, "Trends: Price / Total Sqft");
+  });
+ 
+  $rootScope.$on('$destroy', function() {
+    cleanupFunc();
+  });
+  
+})
+
+
+app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, selAreaData) {
+  var cleanupFunc = $rootScope.$on('selAreaDrawlistener', function(){
+    selChartService.draw($scope, selAreaData, "Trends: Price");
+  });
+ 
+  $rootScope.$on('$destroy', function() {
+    cleanupFunc();
+  });
+  
+})
+
+
 app.service('selChartService', ['chartService', function(chartService){
   return {
-    draw($scope, data){
+    draw($scope, data, label){
       chartService.draw($scope, data);
       // $scope.myData.datasets[0].pointBorderColor = "rgba(215, 173, 66, 1)";
       $scope.myData.datasets[0].borderColor = "rgba(215, 173, 66, 1)";
       $scope.myData.datasets[0].backgroundColor = "rgba(75,192,192,1)";
+      $scope.myData.datasets[0].label = label
     }
   }
 }]);
