@@ -4,6 +4,7 @@
 .project
 build/
 target/
+src/main/resources/static/js/lib/
 
 *.log
 *.log.gz
