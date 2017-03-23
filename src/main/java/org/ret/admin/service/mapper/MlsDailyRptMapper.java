@@ -19,6 +19,7 @@ public class MlsDailyRptMapper {
         mlsDailyRptDto.setCondoNum(pojo.getCondoNum());
         mlsDailyRptDto.setMultiUnitNum(pojo.getMultiUnitNum());
         mlsDailyRptDto.setMobileNum(pojo.getMobileNum());
+        mlsDailyRptDto.setTotNum(pojo.getTotNum());
         
         return mlsDailyRptDto;
     }

@@ -11,6 +11,7 @@ public class MlsDailyRptDto {
     private Integer condoNum;
     private Integer multiUnitNum;
     private Integer mobileNum;
+    private Integer totNum;
     
     public Integer getCountyId() {
         return countyId;
@@ -65,6 +66,12 @@ public class MlsDailyRptDto {
     }
     public void setMobileNum(Integer mobileNum) {
         this.mobileNum = mobileNum;
+    }
+    public Integer getTotNum() {
+        return totNum;
+    }
+    public void setTotNum(Integer totNum) {
+        this.totNum = totNum;
     }
     
  

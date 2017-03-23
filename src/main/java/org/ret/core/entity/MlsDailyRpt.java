@@ -41,6 +41,9 @@ public class MlsDailyRpt implements Serializable {
     
     @Column(name="MOBILE_NUM")
     private Integer mobileNum;
+    
+    @Column(name="TOT_NUM")
+    private Integer totNum;
 
     public Integer getCountyId() {
         return countyId;
@@ -76,5 +79,9 @@ public class MlsDailyRpt implements Serializable {
 
     public Integer getMobileNum() {
         return mobileNum;
+    }
+
+    public Integer getTotNum() {
+        return totNum;
     }
 }
