@@ -41,7 +41,7 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
     });
     selCritiriaSvc.setSelZipcode('0');
   }
-  
+
   var initFunc = function() {
     $scope.cityObjs = [{
       'city': 'All',
@@ -162,7 +162,6 @@ app.controller('allAreaRptCtrl', function($rootScope, $scope, $http, $log,
           function successCallback(response) {
             allAreaData.parseData(response.data.responseData.priceRpts,
                     'avgPriceStructSqft');
-            $log.info(allAreaData.getData());
             $rootScope.$broadcast('allAreaDrawlistener');
           });
 });
@@ -190,9 +189,42 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
                       'avgPriceStructSqft');
               $rootScope.$broadcast('selAreaDrawlistener');
             });
-    $log.info(url)
   };
 
+  dataUpdFunc();
+  var cleanupFunc = $rootScope.$on('selAreaListener', function(event, args) {
+    dataUpdFunc();
+  });
+
+  $rootScope.$on('$destroy', function() {
+    cleanupFunc();
+  });
+
+});
+
+/** ********************** */
+/* Select Rest data for mls daily report */
+/** ********************** */
+app.controller('mlsDailyRptCtrl', function($rootScope, $scope, $http, $log,
+        selCritiriaSvc, mlsDailyRptData) {
+
+  var dataUpdFunc = function() {
+    var url = '/price-rpt/mls_daily/' + selCritiriaSvc.getSelCountyId() + '-'
+            + selCritiriaSvc.getSelCityId()
+    $http({
+      method: 'GET',
+      url: url
+    }).then(
+            function successCallback(response) {
+              $log.info(response.data.responseData.mlsDailyRpt)
+              mlsDailyRptData.setMlsDailyRpt(response.data.responseData.mlsDailyRpt)
+              $log.info(mlsDailyRptData.getPieData())
+              $rootScope.$broadcast('mlsDailyRptDrawlistener');
+            });
+    $log.info(url)
+  };
+  
+  
   dataUpdFunc();
   var cleanupFunc = $rootScope.$on('selAreaListener', function(event, args) {
     dataUpdFunc();
@@ -213,7 +245,6 @@ app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
     $scope.selCountyId = selCritiriaSvc.getSelCountyId()
     $scope.selCityId = selCritiriaSvc.getSelCityId()
     $scope.selZipcode = selCritiriaSvc.getSelZipcode()
-    $log.info(selCritiriaSvc)
     $rootScope.$broadcast('selAreaListener');
   }
 })

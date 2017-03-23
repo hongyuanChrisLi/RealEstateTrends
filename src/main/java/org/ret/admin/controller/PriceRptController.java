@@ -55,7 +55,7 @@ public class PriceRptController extends AbstractController {
         
         MlsDailyRptDto mlsDailyRptDto = priceRptService.getMlsDailyRptDtos(countyId, cityId);
         if (mlsDailyRptDto != null) {
-            return successResponse("priceRpts", mlsDailyRptDto);
+            return successResponse("mlsDailyRpt", mlsDailyRptDto);
         }
         return notFound(NO_MLS_DAILY_RPT_FOUND);
     }

@@ -34,7 +34,7 @@ app.controller("selAreaTotSqftLineCtrl", function($rootScope, $scope, selChartSe
     cleanupFunc();
   });
   
-})
+});
 
 
 app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, selAreaData) {
@@ -46,8 +46,20 @@ app.controller("selAreaLineCtrl", function($rootScope, $scope, selChartService, 
     cleanupFunc();
   });
   
-})
+});
 
+
+app.controller("mlsDailyRptPieCtrl", function($rootScope, $scope, pieService, mlsDailyRptData){
+  
+  var cleanupFunc = $rootScope.$on('mlsDailyRptDrawlistener', function(){
+    pieService.draw($scope, mlsDailyRptData.getPieLabels(), mlsDailyRptData.getPieData());
+  });
+ 
+  $rootScope.$on('$destroy', function() {
+    cleanupFunc();
+  });
+  
+});
 
 app.service('selChartService', ['chartService', function(chartService){
   return {
@@ -99,3 +111,31 @@ app.service('chartService', function(){
       }
   }
 });
+
+app.service('pieService', function(){
+  return {
+    draw($scope, pieLabels, pieData){
+      $scope.myData = {
+              labels: pieLabels,
+            datasets: [
+                {
+                    data: pieData,
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56",
+                        "#33cc33",
+                        "#e600ac"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56",
+                        "#33cc33",
+                        "#e600ac"
+                    ]
+                }]
+        };
+    }
+  }
+})
