@@ -237,7 +237,7 @@ app.controller('mlsDailyRptCtrl', function($rootScope, $scope, $http, $log,
 });
 
 /** ********************** */
-/* Controller for verification */
+/* Controller for chart updates */
 /** ********************** */
 app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
 

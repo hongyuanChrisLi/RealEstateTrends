@@ -109,6 +109,22 @@ input:focus,textarea:focus {
   clear:both;	
 }
 
+.pageHeadGreen{
+	
+}
+.pageHeadPurple{
+	
+}
+.chartAreaDefault{
+  background-color:#ffffe6	
+}
+.chartAreaPurple{
+  background-color:#efeff9	
+}
+.chartAreaGreen{
+  background-color:#efeff9
+}
+
 /* header section */
 header {
   height:110px;
@@ -281,7 +297,7 @@ footer .copyright {
   font-size:0.9em;
 }
 .projectHead .btn {
-  background-color:#9999ff;
+  background-color:#037d96;
   color:#fff;
 }
 .projectHead .chart {
