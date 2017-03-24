@@ -16,7 +16,16 @@ app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
       'county': 'All',
       'countyId': 0
     })
-    $scope.selCountyObj = $scope.countyObjs[0]
+    
+    var len = $scope.countyObjs.length;  
+    for (var i = 0; i < len; i ++ )
+     {
+        if ( selCritiriaSvc.getSelCountyId() == $scope.countyObjs[i].countyId ){
+          $scope.selCountyObj = $scope.countyObjs[i];
+          break;
+        }
+     }
+    
     $scope.onChange = function() {
       $rootScope.$broadcast('countyListener', {
         countyId: $scope.selCountyObj.countyId
@@ -32,32 +41,17 @@ app.controller('countyOptCtrl', function($rootScope, $scope, $http, $log,
 /** ********************** */
 app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
         selCritiriaSvc) {
-
-  // initialization
-  var resetZipFunc = function() {
-    // Reset downstream
-    $rootScope.$broadcast('cityListener', {
-      cityId: 0
-    });
-    selCritiriaSvc.setSelZipcode('0');
-  }
-
-  var initFunc = function() {
-    $scope.cityObjs = [{
-      'city': 'All',
-      'cityId': 0
-    }];
-    $scope.selCityObj = $scope.cityObjs[0];
-  }
-
-  initFunc();
-  resetZipFunc();
-  var cleanupFunc = $rootScope.$on('countyListener', function(event, args) {
-    var countyId = args.countyId;
+  
+  var dataUpdFunc = function(countyId) {
+    $log.info(selCritiriaSvc.getSelCityId())
     if (countyId == 0) {
-      initFunc();
+      $scope.cityObjs = [{
+        'city': 'All',
+        'cityId': 0
+      }];
+      $scope.selCityObj = $scope.cityObjs[0];
     } else {
-      // Rest API call
+      
       $http({
         method: 'GET',
         url: '/area/city/' + countyId
@@ -67,10 +61,26 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
           'city': 'All',
           'cityId': 0
         })
-        $scope.selCityObj = $scope.cityObjs[0]
+        var len =  $scope.cityObjs.length;
+        for ( var i = 0; i < len; i++){
+          if ( selCritiriaSvc.getSelCityId() == $scope.cityObjs[i].cityId){
+            $scope.selCityObj = $scope.cityObjs[i];
+            break;
+          }
+        }
       });
     }
-    resetZipFunc();
+    
+    $rootScope.$broadcast('cityListener', {
+      cityId: 0
+    });
+    selCritiriaSvc.setSelZipcode('0');
+  }
+  
+  dataUpdFunc(selCritiriaSvc.getSelCountyId());
+  
+  var cleanupFunc = $rootScope.$on('countyListener', function(event, args) {
+    dataUpdFunc(args.countyId);
   });
 
   $scope.onChange = function() {
@@ -280,6 +290,7 @@ app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
     $scope.selCountyId = selCritiriaSvc.getSelCountyId()
     $scope.selCityId = selCritiriaSvc.getSelCityId()
     $scope.selZipcode = selCritiriaSvc.getSelZipcode()
+    $log.info(selCritiriaSvc.getSelCountyId());
     $rootScope.$broadcast('selAreaListener');
   }
 })
