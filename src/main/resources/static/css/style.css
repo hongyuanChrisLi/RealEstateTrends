@@ -212,6 +212,9 @@ footer .copyright {
   margin-top:5%;
   width:15%;
 }
+.projectObj .desc {
+  color:#818181;
+}
 
 .paddRow {
   background-color:#dadada;
@@ -265,6 +268,16 @@ footer .copyright {
 .about .flRight {
   float:right;
 }
+.about .num{
+  color:#000000;
+}
+.about .priceUp{
+  color:#ff0000;
+}
+.about .priceDown{
+  color:#00ff00;
+}
+
 
 .projectHead .picture {
   margin-bottom:0%;

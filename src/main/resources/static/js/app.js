@@ -5,17 +5,14 @@ var app = angular.module('app', ['ngRoute', 'tc.chartjs']).config(
         ['$routeProvider', function($routeProvider) {
           $routeProvider.when('/', {
             templateUrl: 'pages/index.html',
-            activetab: 'projects',
-            controller: HomeCtrl
+            activetab: 'projects'
           }).when('/project/:projectId', {
             templateUrl: function(params) {
               return 'pages/' + params.projectId + '.html';
             },
-            controller: ProjectCtrl,
             activetab: 'projects'
           }).when('/about', {
             templateUrl: 'pages/about.html',
-            controller: AboutCtrl,
             activetab: 'about'
           }).otherwise({
             redirectTo: '/'

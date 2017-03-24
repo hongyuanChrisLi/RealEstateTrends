@@ -131,7 +131,7 @@ app.service('chartService', function(){
                   maxTicksLimit: 12
                 },
                 time : {
-                  tooltipFormat: 'YYYY-MM-DD'
+                  tooltipFormat: 'YYYY-MM'
                 }
               }],
               yAxes:[{

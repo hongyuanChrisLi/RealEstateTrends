@@ -38,8 +38,8 @@ app.service('selAreaStructSqftData', ['genericDataExtract', function(genericData
     getData: function() {
       return data;
     },
-    parseData: function(priceRpts, priceType) {
-      genericDataExtract.parseData(priceRpts, priceType);
+    parseData: function(priceRpts) {
+      genericDataExtract.parseData(priceRpts, 'avgPriceStructSqft');
       data = genericDataExtract.getData();
     }
   }
@@ -56,7 +56,7 @@ app.service('selAreaTotSqftData', ['genericDataExtract', function(genericDataExt
       return data;
     },
     parseData: function(priceRpts, priceType) {
-      genericDataExtract.parseData(priceRpts, priceType);
+      genericDataExtract.parseData(priceRpts, 'avgPriceTotSqft');
       data = genericDataExtract.getData();
     }
   }

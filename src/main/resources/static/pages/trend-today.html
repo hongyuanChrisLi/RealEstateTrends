@@ -23,19 +23,47 @@
 				<div ng-controller="viewCtrl">
 					<a class="btn" ng-click="onClick()">Update Charts</a>
 				</div>
+				<div ng-controller="selAreaRptCtrl"></div>
 				<div ng-controller="mlsDailyRptCtrl"></div>
 			</div>
 			<div style="clear: both"></div>
 		</div>
 	</div>
 	<div class="wrap chartAreaDefault">
-		<div class="chart right" ng-controller="mlsDailyRptPieCtrl">
+		<div class="chart left" ng-controller="mlsDailyRptPieCtrl">
 			<div class="wrap">
 				<canvas width="440" height="300" tc-chartjs-pie chart-data="myData"
 					chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
 			</div>
 		</div>
+		<div ng-controller="dailyCompareCtrl">
+			<div class="about txt" width="440" height="300">
+				<p class="subHead">Average Price Per Structure Sqft</p>
+				<div class = "left">
+					<p>
+						Today: <a class="num">${{priceStructToday}}</a>
+					</p>
+					<p>
+						Last Month: <a class="num">${{priceStructLast}}</a>
+					</p>
+					<p>
+						Change: <span
+							ng-class="{'priceUp': priceStructDiff > 0, 'priceDown': priceStructDiff <= 0}">${{priceStructDiff}}</span>
+					</p>
+					<p>
+						Sampe Size: <a class="num">{{sampleSize}}</a>
+					</p>
+				</div>
+				<div class="about right">
+				<img class="img"
+					ng-src="{{priceStructDiff > 0  && 'images/up.png' || 'images/down.png'}}" />
+				</div>
+			</div>
+			
+		</div>
 	</div>
 
-	<ng-include src="'pages/footer.html'"></ng-include>
+</div>
+
+<ng-include src="'pages/footer.html'"></ng-include>
 </div>

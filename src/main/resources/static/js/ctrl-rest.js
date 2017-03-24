@@ -180,15 +180,11 @@ app.controller('selAreaRptCtrl', function($rootScope, $scope, $http, $log,
     $http({
       method: 'GET',
       url: url
-    }).then(
-            function successCallback(response) {
-              selAreaTotSqftData.parseData(
-                      response.data.responseData.priceRpts, 'avgPriceTotSqft');
-              selAreaStructSqftData.parseData(
-                      response.data.responseData.priceRpts,
-                      'avgPriceStructSqft');
-              $rootScope.$broadcast('selAreaDrawlistener');
-            });
+    }).then(function successCallback(response) {
+      selAreaTotSqftData.parseData(response.data.responseData.priceRpts);
+      selAreaStructSqftData.parseData(response.data.responseData.priceRpts);
+      $rootScope.$broadcast('selAreaDrawlistener');
+    });
   };
 
   dataUpdFunc();
@@ -214,27 +210,66 @@ app.controller('mlsDailyRptCtrl', function($rootScope, $scope, $http, $log,
     $http({
       method: 'GET',
       url: url
-    }).then(
-            function successCallback(response) {
-              $log.info(response.data.responseData.mlsDailyRpt)
-              mlsDailyRptData.setMlsDailyRpt(response.data.responseData.mlsDailyRpt)
-              $log.info(mlsDailyRptData.getPieData())
-              $rootScope.$broadcast('mlsDailyRptDrawlistener');
-            });
-    $log.info(url)
+    }).then(function successCallback(response) {
+      mlsDailyRptData.setMlsDailyRpt(response.data.responseData.mlsDailyRpt)
+      $rootScope.$broadcast('mlsDailyRptDrawlistener');
+    });
   };
-  
-  
-  dataUpdFunc();
-  var cleanupFunc = $rootScope.$on('selAreaListener', function(event, args) {
-    dataUpdFunc();
-  });
+
+  var cleanupFunc = $rootScope.$on('selAreaDrawlistener',
+          function(event, args) {
+            dataUpdFunc();
+          });
 
   $rootScope.$on('$destroy', function() {
     cleanupFunc();
   });
 
 });
+
+/** ********************** */
+/* Controller for chart updates */
+/** ********************** */
+app
+  .controller(
+          'dailyCompareCtrl',
+      function($rootScope, $scope, $log, selAreaStructSqftData,
+              selAreaTotSqftData, mlsDailyRptData) {
+  
+        var dataUpdFunc = function() {
+          $scope.priceStructToday = mlsDailyRptData
+                  .getAvgPriceStructSqft();
+          $scope.priceTotToday = mlsDailyRptData.getAvgPriceTotSqft();
+          $scope.sampleSize = mlsDailyRptData.getTotNum();
+  
+          var structDataLen = selAreaStructSqftData.getData().length;
+  
+          if (structDataLen != 0) {
+            $scope.priceStructLast = selAreaStructSqftData.getData()[structDataLen - 1].y;
+            $scope.priceStructDiff = Math
+                    .round(($scope.priceStructToday - $scope.priceStructLast) * 100) / 100;
+          }
+  
+          var totDataLen = selAreaTotSqftData.getData().length;
+  
+          if (totDataLen != 0) {
+            $scope.priceTotLast = selAreaTotSqftData.getData()[totDataLen - 1].y;
+            $scope.priceTotDiff = Math
+                    .round(($scope.priceTotToday - $scope.priceTotLast) * 100) / 100;
+          }
+  
+        };
+  
+        // dataUpdFunc();
+        var cleanupFunc = $rootScope.$on('mlsDailyRptDrawlistener',
+                function(event, args) {
+                  dataUpdFunc();
+                });
+  
+        $rootScope.$on('$destroy', function() {
+          cleanupFunc();
+        });
+      });
 
 /** ********************** */
 /* Controller for chart updates */
