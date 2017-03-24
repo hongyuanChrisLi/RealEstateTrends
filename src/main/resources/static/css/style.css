@@ -191,14 +191,8 @@ footer .copyright {
 
 /* other objects */
 .chartBox {
-  color:#fff;
-  display:block;
-}
-.chartBox .chart {
-  float:right;
-  margin-bottom:5%;
-  margin-top:5%;
-  width:50%;
+  margin-bottom:3%;
+  margin-top:2%;
 }
 
 .projectObj {

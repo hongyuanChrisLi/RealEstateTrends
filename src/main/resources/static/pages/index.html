@@ -1,14 +1,12 @@
 <div style="width: 100%">
-	<a class="chartBox" style="background-color: #ffffe6">
-		<div class="wrap">
-			<div ng-controller="allAreaRptCtrl">
-				<div class="chart" ng-controller="allAreaLineCtrl">
-					<canvas tc-chartjs-line chart-data="myData"
-						chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
-				</div>
-			</div>
+	<div class="wrap chartAreaDefault">
+		<div ng-controller="allAreaRptCtrl"></div>
+		<div class="chartBox right" ng-controller="allAreaLineCtrl">
+			<canvas width="300" height="150" tc-chartjs-line chart-data="myData"
+				chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
 		</div>
-	</a> <a class="projectObj" href="#!/project/trend-today"
+	</div>
+	 <a class="projectObj" href="#!/project/trend-today"
 		style="background-color: #87b822">
 		<div class="wrap">
 			<div class="name">Trend Today</div>

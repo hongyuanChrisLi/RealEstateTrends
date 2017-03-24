@@ -13,10 +13,6 @@ var app = angular.module('app', ['ngRoute', 'tc.chartjs']).config(
             },
             controller: ProjectCtrl,
             activetab: 'projects'
-          }).when('/privacy', {
-            templateUrl: 'pages/privacy.html',
-            controller: PrivacyCtrl,
-            activetab: 'privacy'
           }).when('/about', {
             templateUrl: 'pages/about.html',
             controller: AboutCtrl,
