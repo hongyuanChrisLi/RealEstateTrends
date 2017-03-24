@@ -2,9 +2,9 @@
 
 var app = angular.module("app");
 
-app.controller("allAreaLineCtrl", function($rootScope, $scope, $log, chartService, allAreaData) {
+app.controller("allAreaLineCtrl", function($rootScope, $scope, $log, allAreaChartService, allAreaData) {
   var cleanupFunc = $rootScope.$on('allAreaDrawlistener', function() {
-    chartService.draw($scope, allAreaData, "Real Estate Trends");
+    allAreaChartService.draw($scope, allAreaData, "Real Estate Trends");
   });
 
   $rootScope.$on('$destroy', function() {
@@ -61,6 +61,22 @@ app.controller("mlsDailyRptPieCtrl", function($rootScope, $scope, pieService, ml
   
 });
 
+app.service('allAreaChartService', ['chartService', function(chartService){
+  return {
+    draw($scope, data, label){
+      chartService.draw($scope, data);
+      
+      $scope.myData.datasets[0].label = label
+      
+      $scope.myOptions.scales.xAxes[0].gridLines.display = false;
+      $scope.myOptions.scales.yAxes[0].gridLines.display = false;
+      $scope.myOptions.scales.xAxes[0].ticks.display = false
+      $scope.myOptions.scales.yAxes[0].ticks.maxTicksLimit = 3;
+    }
+  }
+}]);
+
+
 app.service('selChartService', ['chartService', function(chartService){
   return {
     draw($scope, data, label){
@@ -104,8 +120,42 @@ app.service('chartService', function(){
             scales: {
               xAxes: [{
                 type: 'time',
-                position: 'bottom'
+                position: 'bottom',
+                display:true,
+                gridLines:{
+                  display: true
+                },
+                ticks: {
+                  display: true,
+                  autoSkip: true,
+                  maxTicksLimit: 12
+                },
+                time : {
+                  tooltipFormat: 'YYYY-MM-DD'
+                }
+              }],
+              yAxes:[{
+                display: true,
+                gridLines:{
+                  display: true
+                },
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 5
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Price / Sqft'
+                }
               }]
+            }, 
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem, data) {
+                  var price = tooltipItem.yLabel;
+                  return '$' + price;
+                }
+              }
             }
           }
       }
