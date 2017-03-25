@@ -43,7 +43,6 @@ app.controller('cityOptCtrl', function($rootScope, $scope, $http, $log,
         selCritiriaSvc) {
   
   var dataUpdFunc = function(countyId) {
-    $log.info(selCritiriaSvc.getSelCityId())
     if (countyId == 0) {
       $scope.cityObjs = [{
         'city': 'All',
@@ -290,7 +289,6 @@ app.controller('viewCtrl', function($rootScope, $scope, $log, selCritiriaSvc) {
     $scope.selCountyId = selCritiriaSvc.getSelCountyId()
     $scope.selCityId = selCritiriaSvc.getSelCityId()
     $scope.selZipcode = selCritiriaSvc.getSelZipcode()
-    $log.info(selCritiriaSvc.getSelCountyId());
     $rootScope.$broadcast('selAreaListener');
   }
 })
