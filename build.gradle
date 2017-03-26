@@ -107,5 +107,5 @@ task downloadChartJs(type: Download) {
     dest 'src/main/resources/static/js/lib/Chart.js'
 }
 
-war.dependsOn downloadMonentJs
-war.dependsOn downloadChartJs
+processResources.dependsOn downloadMonentJs
+processResources.dependsOn downloadChartJs
