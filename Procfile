@@ -1,1 +1,1 @@
-web:     java -jar tools/webapp-runner.jar build/libs/myapp-0.0.1.war
+web:     java -jar tools/webapp-runner.jar --port $PORT build/libs/myapp-0.0.1.war
