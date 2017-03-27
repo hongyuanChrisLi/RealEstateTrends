@@ -1,10 +1,13 @@
 <div style="width: 100%">
 	<div class="projectHead" style="background-color: #9999ff">
 		<div class="wrap">
-			<div class="left">
-				<h2>Real Estate Trends</h2>
+			<div class=" text left">
+				<h2>Real Estate Trends in History</h2>
 				<img class="picture left" src="images/house_icon1.png" />
-				<p>Select county, city or zipcode you are interested in</p>
+				<p>Select county, city, zipcode or property type you are
+					interested in, to find out the real estate trends since 2010,
+					through the measure of both "price per structure sqft" and "price
+					per total sqft"</p>
 
 			</div>
 
@@ -44,19 +47,29 @@
 		<div ng-controller="selAreaRptCtrl"></div>
 		<div class="chart left" ng-controller="selAreaStructSqftLineCtrl">
 			<div class="wrap">
-				<canvas width="440" height="300" tc-chartjs-line
-					chart-data="myData" chart-options="myOptions"
-					chart-click="onChartClick(event)"></canvas>
+				<canvas width="440" height="300" tc-chartjs-line chart-data="myData"
+					chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
 			</div>
+		</div>
+		<div class="about flRight">
+			<h2 class="subHead">Price Per Structure Sqft</h2>
+			<p>By calculating price per sqft, we could analyze various types
+				of properties on the same scale, regardless of their size. Click on
+				the line chart to check the sampled month and price data</p>
 		</div>
 	</div>
 	<div class="wrap chartAreaPurple">
 		<div class="chart right" ng-controller="selAreaTotSqftLineCtrl">
 			<div class="wrap">
-				<canvas width="440" height="300" tc-chartjs-line
-					chart-data="myData" chart-options="myOptions"
-					chart-click="onChartClick(event)"></canvas>
+				<canvas width="440" height="300" tc-chartjs-line chart-data="myData"
+					chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
 			</div>
+		</div>
+		<div class="about flLeft">
+			<h2 class="subHead">Price Per Total Sqft</h2>
+			<p>In complement to Price Per Structure Sqft chart above, Price
+				Per Total Sqft chart includes the factor of lot size on a property.
+				Click on the line chart to check the sampled month and price data</p>
 		</div>
 	</div>
 
