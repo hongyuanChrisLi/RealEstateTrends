@@ -1,49 +1,87 @@
-<div style="width:100%">
-    <div class="paddRow aboutRow">
-        <div class="wrap">
-            <div class="head">About Us</div>
-            <p>Script Tutorials is one of the largest web development communities. We provide high quality content (articles and tutorials) which covers all the web development technologies including HTML5, CSS3, Javascript (and jQuery), PHP and so on. Our audience are web designers and web developers who work with web technologies.</p>
-        </div>
-    </div>
+<div style="width: 100%">
+	<div class="paddRow aboutRow">
+		<div class="wrap">
+			<div class="head">About This Project</div>
+			<p>The Real Estate Trends project provides a better understanding
+				of the real estate market in Silicon Valley and its vicinities. This
+				project comprises of 4 major components: data collection, data
+				transformation, backend engineering and frontend presentation.
+				Various technologies are utilized to contribute to each piece of
+				information and functionality that you see today.</p>
+		</div>
 
-    <div style="background-color:#f5f5f5">
-        <div class="wrap about">
-            <div class="head">Additional information</div>
+		<div style="background-color: #f5f5f5">
+			<div class="wrap about">
+				<div class="head">Project Components</div>
 
-            <section>
-                <div class="image flRight">
-                    <img src="images/data_process.png" class="abIcon">
-                </div>
-                <div class="txt flLeft">
-                    <h2 class="subHead">Promo 1</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-                </div>
-                <div style="clear:both"></div>
-            </section>
+				<section>
+					<div class="image flRight">
+						<img src="images/data_collect.png" class="abIcon">
+					</div>
+					<div class="txt flLeft">
+						<h2 class="subHead">Data Collection</h2>
+						<p>We use multiple Python tools( Scrapy, Splash, and Selenium)
+							to crawl a couple of real estate listing websites for data
+							gathering. Our python scripts are optimized to scrape these
+							websites in an efficient but leisure fashion, thus to avoid
+							overloading their servers and bot detection. In this stage, data
+							is preliminarily cleansed and handed to database staging tables.
+						</p>
+					</div>
+					<div style="clear: both"></div>
+				</section>
 
-            <section>
-                <div class="image flLeft">
-                    <img src="images/backend.png" class="abIcon">
-                </div>
-                <div class="txt flRight">
-                    <h2 class="subHead">Promo 2</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-                </div>
-                <div style="clear:both"></div>
-            </section>
+				<section>
+					<div class="image flLeft">
+						<img src="images/data_transform.png" class="abIcon">
+					</div>
+					<div class="txt flRight">
+						<h2 class="subHead">Data Transformation</h2>
+						<p>Our MySQL data model loosely complies with star schema
+							design, which includes staging, fact, dimension, history and
+							report tables. Data transformation is primarily achieved through
+							stored procedures and orchestrated by Python scripts. After the
+							daily data collection process, staging data is used to update
+							fact, dimension, and history tables, on which report data is
+							generated. Eventually the local report data is transformed and
+							transported to Postgresql databases offered by Heroku cloud
+							service.</p>
+					</div>
+					<div style="clear: both"></div>
+				</section>
 
-            <section>
-                <div class="image flRight">
-                    <img src="images/frontend.png" class="abIcon">
-                </div>
-                <div class="txt flLeft">
-                    <h2 class="subHead">Promo 3</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et ligula accumsan, pharetra nibh nec, facilisis nulla. In pretium semper venenatis. In adipiscing augue elit, at venenatis enim suscipit a. Fusce vitae justo tristique, ultrices mi metus.</p>
-                </div>
-                <div style="clear:both"></div>
-            </section>
+				<section>
+					<div class="image flRight">
+						<img src="images/backend.png" class="abIcon">
+					</div>
+					<div class="txt flLeft">
+						<h2 class="subHead">Backend Engineering</h2>
+						<p>Powered by Spring Boot, Real Estate Trends backend system
+							bridges the database and frontend. The backend system is written
+							in Java, accessing PostgreSQL with JPA, creating response in
+							RESTful API JSON format, and documenting the RESTful API through
+							Swagger. We use Gradle to build this Spring application and
+							deploy it as a Tomcat web application resource (WAR) file.</p>
+					</div>
+					<div style="clear: both"></div>
+				</section>
 
-        </div>
-    </div>
-    <ng-include src="'pages/footer.html'"></ng-include>
-</div>
+
+				<section>
+					<div class="image flLeft">
+						<img src="images/frontend.png" class="abIcon">
+					</div>
+					<div class="txt flRight">
+						<h2 class="subHead">Frontend Presentation</h2>
+						<p>The frontend development borrowed style settings from a
+							template provided by script-tutorial.com. Our interactive charts
+							are created with Chart.js, while the rest of our dynamic web
+							content is built with AngularJS.</p>
+					</div>
+					<div style="clear: both"></div>
+				</section>
+
+			</div>
+		</div>
+		<ng-include src="'pages/footer.html'"></ng-include>
+	</div>
