@@ -201,10 +201,10 @@ footer .copyright {
 }
 .projectObj .name {
   float:left;
-  font-size:4em;
+  margin-top:2%;
+  font-size:4vw;
   font-weight:100;
-  position:absolute;
-  width:42%;
+  width: 60%;
 }
 .projectObj .img {
   float:right;
