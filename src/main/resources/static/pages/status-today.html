@@ -1,12 +1,13 @@
 <div style="width: 100%">
 	<div class="projectHead" style="background-color: #87b822">
 		<div class="wrap">
-			<div class="left">
+			<div class=" text left">
 				<h2>Real Estate Price Today</h2>
 				<img class="picture left" src="images/house_icon2.png" />
-				<p>Select county, city or zipcode you are interested in</p>
-				<p>Select county, city or zipcode you are interested in</p>
-
+				<p>Select county and/or city you are interested in, to find out
+					how many properties are available, how many of each property type
+					are selling, and the today's price per sqft compared to last month
+					in that area</p>
 			</div>
 
 			<div class="right">
@@ -30,17 +31,30 @@
 			<div style="clear: both"></div>
 		</div>
 	</div>
-	<div class="wrap chartAreaDefault">
-		<div class="chart left" ng-controller="mlsDailyRptPieCtrl">
-			<div class="wrap">
+	<div ng-controller="dailyCompareCtrl">
+		<section class="wrap chartAreaDefault">
+			<div class="chart left" ng-controller="mlsDailyRptPieCtrl">
 				<canvas width="440" height="300" tc-chartjs-pie chart-data="myData"
 					chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+
 			</div>
-		</div>
-		<div ng-controller="dailyCompareCtrl">
-			<div class="about txt" width="440" height="300">
+			<div class="about flRight">
+				<h2 class="subHead">Property Type Pie Chart</h2>
+				<p>
+					Total Available Listings: <a class="num">{{sampleSize}}</a>
+				</p>
+				<p>This pie chart details the composition of property types of
+					the real estate market in a selected area. Click on the pie chart
+					to see the number of each property type.</p>
+			</div>
+			<div style="clear: both"></div>
+
+		</section>
+
+		<section class="wrap chartAreaGreen">
+			<div class="about flLeft" width="440" height="300">
 				<p class="subHead">Average Price Per Structure Sqft</p>
-				<div class = "left">
+				<div class="left">
 					<p>
 						Today: <a class="num">${{priceStructToday}}</a>
 					</p>
@@ -51,20 +65,18 @@
 						Change: <span
 							ng-class="{'priceUp': priceStructDiff > 0, 'priceDown': priceStructDiff <= 0}">${{priceStructDiff}}</span>
 					</p>
-					<p>
-						Sampe Size: <a class="num">{{sampleSize}}</a>
-					</p>
 				</div>
 				<div class="about right">
-				<img class="img"
-					ng-src="{{priceStructDiff > 0  && 'images/up.png' || 'images/down.png'}}" />
+					<img class="img"
+						ng-src="{{priceStructDiff > 0  && 'images/up.png' || 'images/down.png'}}" />
 				</div>
 			</div>
-			
-		</div>
-	</div>
 
+		</section>
+
+
+	</div>
 </div>
 
 <ng-include src="'pages/footer.html'"></ng-include>
-</div>
+
