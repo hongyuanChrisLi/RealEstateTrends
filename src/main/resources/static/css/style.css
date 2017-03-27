@@ -109,12 +109,6 @@ input:focus,textarea:focus {
   clear:both;	
 }
 
-.pageHeadGreen{
-	
-}
-.pageHeadPurple{
-	
-}
 .chartAreaDefault{
   background-color:#ffffe6	
 }
@@ -190,9 +184,28 @@ footer .copyright {
 }
 
 /* other objects */
-.chartBox {
-  margin-bottom:3%;
-  margin-top:2%;
+.welcome {
+  color:#818181;
+  margin-bottom:5%;
+}
+
+.welcome .text {
+  width:50%;
+  position:relative;
+  float:left;
+}
+
+.welcome .subHead {
+  font-size:2.5em;
+  font-weight:100;
+  margin:0 0 3%;
+}
+
+.welcome .chart {
+  position:relative;
+  float:right;
+  width:40%;
+  height: 30vh;
 }
 
 .projectObj {

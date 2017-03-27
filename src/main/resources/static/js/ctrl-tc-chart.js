@@ -72,6 +72,7 @@ app.service('allAreaChartService', ['chartService', function(chartService){
       $scope.myOptions.scales.yAxes[0].gridLines.display = false;
       $scope.myOptions.scales.xAxes[0].ticks.display = false
       $scope.myOptions.scales.yAxes[0].ticks.maxTicksLimit = 3;
+      $scope.myOptions.maintainAspectRatio = false;
     }
   }
 }]);
@@ -156,7 +157,9 @@ app.service('chartService', function(){
                   return '$' + price;
                 }
               }
-            }
+            }, 
+            responsive: true,
+            maintainAspectRatio: true
           }
       }
   }

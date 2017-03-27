@@ -1,12 +1,23 @@
 <div style="width: 100%">
 	<div class="wrap chartAreaDefault">
 		<div ng-controller="allAreaRptCtrl"></div>
-		<div class="chartBox right" ng-controller="allAreaLineCtrl">
-			<canvas width="300" height="150" tc-chartjs-line chart-data="myData"
-				chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+		<div class="welcome">
+			<div class="text">
+				<h2 class="subHead">Welcome!</h2>
+				<p>The steadily climbing real estate price in San Francisco Bay
+					Area is always the hot topic among the residents. Our website
+					provides high level reports on the trends of real estate market in
+					the Silicon Valley and its vicinities. We hope that you find our
+					site useful.</p>
+			</div>
+			<div class="chart" ng-controller="allAreaLineCtrl">
+				<canvas tc-chartjs-line chart-data="myData"
+					chart-options="myOptions" chart-click="onChartClick(event)"></canvas>
+			</div>
 		</div>
+		<div style="clear: both"></div>
 	</div>
-	 <a class="projectObj" href="#!/project/status-today"
+	<a class="projectObj" href="#!/project/status-today"
 		style="background-color: #87b822">
 		<div class="wrap">
 			<div class="name">Status Today</div>
