@@ -128,6 +128,7 @@ header .wrap {
 }
 header .logo {
   margin:1px;
+  width: 5vw;
 }
 header nav {
   float:right;
@@ -455,7 +456,7 @@ button {
     }
     header .logo {
       margin-top:12px;
-      width:200px;
+      width:15vw;
     }
     header nav {
       margin-top:11px;
