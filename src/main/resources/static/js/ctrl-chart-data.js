@@ -92,7 +92,7 @@ app.service('genericDataExtract', function() {
         var value = priceRpts[i];
         var dateStr = value.rptDate;
         var dateA = dateStr.split("-")
-        var date = new Date(dateA[0], dateA[1], dateA[2])
+        var date = new Date(parseInt(dateA[0]), parseInt(dateA[1]) - 1, parseInt(dateA[2]))
         var item = {
           x: date,
           y: value[priceType]
